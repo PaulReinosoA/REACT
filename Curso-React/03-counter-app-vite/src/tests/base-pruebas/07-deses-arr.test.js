@@ -1,0 +1,18 @@
+import { retornaArreglo } from "../../base-pruebas/07-deses-arr";
+
+describe('Pruebas en 07-deses-arr', () => {
+    
+    test('debe retornar un string y un numero ', () => {
+        
+        const retorno = retornaArreglo();
+        console.log(retornaArreglo());
+        
+        const [letters,numbers] = retornaArreglo();
+
+        expect(letters).toBe('ABC');
+        expect(numbers).toBe(123);//TOBE evalua el tipo de dato
+
+        expect(letters).toEqual(expect.any(String)); //preguntas que acepte cualquier string
+    });
+    
+});
