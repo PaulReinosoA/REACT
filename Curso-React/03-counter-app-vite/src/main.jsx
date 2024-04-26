@@ -11,7 +11,8 @@ import './styles.css';
 const root = createRoot(document.getElementById('root'));
 root.render( 
         //<FirstApp title = 'Hola G, 123' subtitle = { 500 } value={555}/>
-        <CounterApp value={20} />
+        /*<CounterApp value={20} />*/
+        <FirstApp />
 );
 
 

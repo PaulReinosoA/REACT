@@ -1,6 +1,7 @@
 import { getHeroeById, getHeroesByOwner } from "../../base-pruebas/08-imp-exp";
 
 describe('pruebas 08-imp-exp.test', () => {
+
     test('getHeroById debe de retornar Heroe por ID ', () => {
         
         const id=1;
@@ -8,7 +9,7 @@ describe('pruebas 08-imp-exp.test', () => {
         console.log(hero);
 
         expect(hero).toEqual({id: 1,name: 'Batman',owner: 'DC'});
-
+        
     });
 
     test('getHeroesByOwner debe de retornar Heroe por ID ', () => {
@@ -33,7 +34,12 @@ describe('pruebas 08-imp-exp.test', () => {
 
         expect(heroesM.filter((heroe) => heroe.owner === 'Marvel')).toEqual(heroesM);
 
-
     });
+
 });
+
+
+
+
+
 
