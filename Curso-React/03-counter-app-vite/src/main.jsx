@@ -11,8 +11,8 @@ import './styles.css';
 const root = createRoot(document.getElementById('root'));
 root.render( 
         //<FirstApp title = 'Hola G, 123' subtitle = { 500 } value={555}/>
-        /*<CounterApp value={20} />*/
-        <FirstApp />
+        <CounterApp value={20} />
+        /*<FirstApp />*/
 );
 
 
@@ -23,3 +23,7 @@ ReactDom.createRoot(document.getElementById('root')).render(
         <App/>
     </React.StrictMode>
 );*/
+
+
+
+
