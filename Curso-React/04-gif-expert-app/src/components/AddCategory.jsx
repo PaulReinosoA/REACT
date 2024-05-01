@@ -1,6 +1,4 @@
 import { useState } from 'react';
-
-
 //SI EL LOG SE LIMPIA POR LA EJECUCION ESTE PUEDE CONFIGURARASE PARA PRECERVARLO EN SETINGS DE f12 PRECERVLOG
 //export const AddCategory = ( {setcategories} ) => {
 export const AddCategory = ( {onSendNewCategory} ) => {

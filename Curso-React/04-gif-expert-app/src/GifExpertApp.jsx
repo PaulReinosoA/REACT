@@ -1,10 +1,11 @@
 import React from 'react'
 import { useState } from 'react';
 import { AddCategory } from './components/AddCategory';
+import { GifGrid } from './components/GifGrid';
 
 export const GifExpertApp = () => {
     //Los Hooks no deben usarse condicionalmente es decir no se acrgan dependiendo una condicion
-    const [categories , setcategories] = useState(['One Punch','Dragon ball']);
+    const [categories , setcategories] = useState(['One Punch']);
     //console.log(categories)//esto es un arreglo
     
     const onAddCategory=(newCategory)=>{
@@ -28,15 +29,23 @@ export const GifExpertApp = () => {
             />
 
             {/* Listado de Gifs */}            
-            {/*<button onClick={ (event)=>{onAddCategory(event)} } >Agregar</button>*/}
-            
-            <ol>
+            {/*<button onClick={ (event)=>{onAddCategory(event)} } >Agregar</button>*/}            
+            {/*<ol>*/}
                 {
-                    categories.map((category)=>{
-                        return <li key={ category }>{ category }</li>
-                    })
-                }                
-            </ol>
+                    /*categories.map((category)=>{
+                        return (
+                            <div key={ category }>
+                                <h3>{category}</h3>
+                                <li >{ category }</li>
+                            </div>
+                        )
+                    })*/
+                    categories.map((category)=>(
+                        <GifGrid key={category} category={category}/>
+                        )
+                    )
+                }
+            {/*<ol>*/}
             {/* GifItem */}
         </>
         //oJHDZPbqIEavBSoj37exjyFUzbE48RL7
