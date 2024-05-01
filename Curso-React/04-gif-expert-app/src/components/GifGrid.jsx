@@ -1,29 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { getGifs } from '../Helpers/getGifs'
+import { GifGfridItem } from './GifGfridItem';
 
 export const GifGrid = ({category}) => {
-  
-    const getGifs = async ()=>{
+    
+  //hook que envia a redibujar
+  const [images, setimages] = useState([])
 
-        const url =`https://api.giphy.com/v1/gifs/trending?key=oJHDZPbqIEavBSoj37exjyFUzbE48RL7&q=${category}&limit=20`;
-        const resp = await fetch( url )
-        const { data } = await resp.json();
-        
-        const gifs = data.map(img=>{
-          return{
-            id:img.id,
-            title:img.title,
-            url:img.images.downsized_medium.url
-          }  
-        })
-        console.log(gifs);
-    }
-  
-    getGifs();//no se hace
+  const getImages = async() => {
+    const newImages = await getGifs(category);
+    setimages(newImages)
+  }
 
-    return (
+  //Hook de react dispara efectos secundarios procesos que se disparan cuando algo suceda cuando el counter cambio o el objeto se renderice por primera vez,... etc.
+  useEffect(() => { //usa dos argumentos callback,lista de dependencias(Condiciones para ejecutar el callback)    
+    getImages();//no se hace-->>> no se llama al compoente  directamenet-->useEffect
+  }, [])//si las dependencias estan vacias [] disparamos solo una vez al generar le componente
+  
+  
+  return (
     <>
-        <h3>{category}</h3>
-        <p>Hol mundo</p>
+      <h3>{category}</h3>
+
+      <div className="card-grid">
+        {images.map((image)=>
+          <GifGfridItem 
+          key = { image.id } 
+          // title = { image.title } 
+          // url = { image.url }           
+          {... image}
+          />
+        )}
+      </div>
     </>
   )
 }
+
+
