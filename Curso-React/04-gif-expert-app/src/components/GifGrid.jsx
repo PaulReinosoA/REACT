@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { getGifs } from '../Helpers/getGifs'
 import { GifGfridItem } from './GifGfridItem';
-
-export const GifGrid = ({category}) => {
-    
+import { useFetchGigs } from '../hooks/useFetchGigs';
+/*    
   //hook que envia a redibujar
   const [images, setimages] = useState([])
 
@@ -16,19 +13,25 @@ export const GifGrid = ({category}) => {
   useEffect(() => { //usa dos argumentos callback,lista de dependencias(Condiciones para ejecutar el callback)    
     getImages();//no se hace-->>> no se llama al compoente  directamenet-->useEffect
   }, [])//si las dependencias estan vacias [] disparamos solo una vez al generar le componente
-  
-  
+*/
+export const GifGrid = ({category}) => {
+
+  //Custon hook
+  const { images, isLoading } = useFetchGigs(category);
+  console.log(images, isLoading);
+
   return (
     <>
       <h3>{category}</h3>
-
+      {
+        isLoading ? (<h2>Cargando...</h2>) : null  //opcion con ternario, pues el null no se renderiza en react
+        //isLoading && (<h2>Cargando...</h2>) //operador and logico, if corto
+      }      
       <div className="card-grid">
         {images.map((image)=>
-          <GifGfridItem 
-          key = { image.id } 
-          // title = { image.title } 
-          // url = { image.url }           
-          {... image}
+          <GifGfridItem
+          key = { image.id }
+          { ...image }//envio todos los campos del objeto
           />
         )}
       </div>
