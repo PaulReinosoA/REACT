@@ -18,7 +18,6 @@ export const useFetchGigs = (category) => {
       getImages();//no se hace-->>> no se llama al compoente  directamenet-->useEffect
     }, [])//si las dependencias estan vacias [] disparamos solo una vez al generar le componente
     
-    
     return{
         images:images,
         isLoading:isLoading

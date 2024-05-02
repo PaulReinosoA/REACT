@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pruebas sobre GifGfridItem debe de hacer match con el snapshot  1`] = `
+<div>
+  <div
+    class="card"
+  >
+    <img
+      alt="bleach"
+      src="https://bleach/bleach.jpg"
+    />
+    <p>
+      bleach
+    </p>
+  </div>
+</div>
+`;

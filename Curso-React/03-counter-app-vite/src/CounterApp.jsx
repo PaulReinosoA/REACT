@@ -41,5 +41,5 @@ CounterApp.propTypes={
 //NOTA:
 /*HOOKS
 Los hooks son 
-
+finciones que permiten ustilizar los estados de ciertos parametros
 */
