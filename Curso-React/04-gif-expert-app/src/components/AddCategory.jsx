@@ -30,8 +30,7 @@ export const AddCategory = ({ onSendNewCategory }) => {
         type="text"
         placeholder="Buscar Gifs"
         // value={ inputstateValue }//ESTO ENVIA UN ERROR DE INICIALIZACION LA PRIMERA VEZ
-        value={inputstateValue === undefined ? '' : inputstateValue}
-        // onChange={ (event)=> {onImputChange(event)} }
+        value={inputstateValue === undefined ? '' : inputstateValue} // inputstateValue === undefined ? '' : inputstateValue
         onChange={onImputChange} // abrebiatura
       />
     </form>
