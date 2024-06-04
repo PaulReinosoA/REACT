@@ -15,7 +15,7 @@ b.url obligatorio
   test('debe de mostarr el valores iniciales del hook', () => {
     // const GifItem =render(<GifGfridItem />)
     const { container } = render(<GifGfridItem title={title} url={url} />);
-    console.log(container);
+    // console.log(container);
     expect(container).toBeDefined();
   });
 

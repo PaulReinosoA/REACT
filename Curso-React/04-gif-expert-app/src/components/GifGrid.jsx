@@ -22,7 +22,7 @@ export const GifGrid = ({ category }) => {
 
   return (
     <>
-      <h3>{category}</h3>
+      <h3 aria-label="h3">{category}</h3>
       {
         isLoading ? <h2>Cargando...</h2> : null // opcion con ternario, pues el null no se renderiza en react
         // isLoading && (<h2>Cargando...</h2>) //operador and logico, if corto

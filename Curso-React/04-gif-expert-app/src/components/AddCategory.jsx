@@ -14,10 +14,15 @@ export const AddCategory = ({ onSendNewCategory }) => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    if (inputstateValue.trim().length <= 1) return; // valido no insertar vacios
+    if (
+      (inputstateValue === undefined ? '' : inputstateValue).trim().length <= 1
+    )
+      return; // valido no insertar vacios
     // const categoryUno = inputstateValue;
     // setcategories( categ => [categoryUno, ...categ] ); //se avisa sobre el cambio a redibujar del componente padre
-    onSendNewCategory(inputstateValue.trim()); // se avisa sobre el cambio a redibujar del componente padre
+    onSendNewCategory(
+      (inputstateValue === undefined ? '' : inputstateValue).trim(),
+    ); // se avisa sobre el cambio a redibujar del componente padre
     setInputState(''); // limpio el input tras cada enter
   };
 
