@@ -18,7 +18,7 @@ import { useFetchGigs } from '../hooks/useFetchGigs';
 export const GifGrid = ({ category }) => {
   // Custon hook
   const { images, isLoading } = useFetchGigs(category);
-  console.log(images, isLoading);
+  // console.log(images, isLoading);
 
   return (
     <>
