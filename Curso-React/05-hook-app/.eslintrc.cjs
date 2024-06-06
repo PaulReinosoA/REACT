@@ -17,6 +17,7 @@ module.exports = {
   },
   plugins: ["react-refresh", "prettier"],
   rules: {
+    "react-hooks/exhaustive-deps": 'warn',
     "react/jsx-no-target-blank": "off",
     "react/react-in-jsx-scope": "off",
     "import/prefer-default-export": "off",

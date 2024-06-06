@@ -12,7 +12,7 @@ export const Message = () => {
     };
 
     window.addEventListener('mousemove', onMouseMove);
-    // funcion de limpieza // si no remuevo 
+    // funcion de limpieza // si no remuevo
     return () => {
       window.removeEventListener('mousemove', onMouseMove);
     };
