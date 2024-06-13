@@ -3,8 +3,8 @@ import { useState } from 'react';
 export const useForm = (initialForm = {}) => {
   const [formState, setformState] = useState(initialForm);
 
-  const OnInputChange = (event) => {
-    const { name, value } = event.target;
+  const OnInputChange = ({ target }) => {
+    const { name, value } = target;
     setformState({
       ...formState, // desestructuramos para matener campos y solo cambiamos name modificaco
       [name]: value,

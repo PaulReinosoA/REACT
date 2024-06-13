@@ -3,10 +3,11 @@ import { HomePage } from './HomePage';
 import { LoginPage } from './LoginPage';
 import { AboutPage } from './AboutPage';
 import { Navbar } from './Navbar';
+import { UserProvider } from './context/UserProvider';
 
 export const MainApp = () => (
-  // const title = 'MainApp';
-  <>
+  // Asi todos los componentes van a poder ver el UserProvider
+  <UserProvider>
     <Navbar />
     <hr />
 
@@ -18,5 +19,5 @@ export const MainApp = () => (
       {/* <Route path="/*" element={<AboutPage />} /> */}
       <Route path="/*" element={<Navigate to="/about" />} />
     </Routes>
-  </>
+  </UserProvider>
 );
