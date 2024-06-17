@@ -15,7 +15,7 @@ export const PokemonCard = ({ id, name, sprites = [] }) => {
     <>
       <code>{JSON.stringify(boxSize)}</code>
       <section style={{ boxSize, display: 'flex' }}>
-        <h2 className="text-capitalize">
+        <h2 aria-label="h2" className="text-capitalize">
           N°{id} - {name.toUpperCase()}
         </h2>
         <div ref={pRef}>
