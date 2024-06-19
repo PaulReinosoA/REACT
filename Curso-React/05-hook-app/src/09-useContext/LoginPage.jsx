@@ -8,7 +8,7 @@ export const LoginPage = () => {
 
   return (
     <>
-      <h1>{title}: MyApp</h1>
+      <h1 aria-label="h1">{title}: MyApp</h1>
       <hr />
       <span aria-label="span">{JSON.stringify(user, null, 3)}</span>;
       <button

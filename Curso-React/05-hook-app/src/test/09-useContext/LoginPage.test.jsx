@@ -21,12 +21,15 @@ describe('tests sobre LoginPage', () => {
   });
 
   test('debe de llamar el setUser cuando se hace click en el boton', () => {
+    const setUserMoock = jest.fn();
     render(
-      <UserContext.Provider value={{ user }}>
+      <UserContext.Provider value={{ user, setuser: setUserMoock }}>
         <LoginPage />
       </UserContext.Provider>,
     );
-    const buttonElemenet = screen.getAllByText('Establecer usuario');
+    const buttonElemenet = screen.getByText('Establecer usuario');
     fireEvent.click(buttonElemenet);
+
+    expect(setUserMoock).toHaveBeenCalledWith(user);
   });
 });

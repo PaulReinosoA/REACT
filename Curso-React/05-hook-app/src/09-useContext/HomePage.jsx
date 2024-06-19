@@ -6,7 +6,7 @@ export const HomePage = () => {
   const { user } = useContext(UserContext);
   return (
     <>
-      <h1>
+      <h1 aria-label="h1">
         {title}: {user?.name}
       </h1>
       <hr />
