@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Navigate, useNavigate, useParams } from 'react-router';
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router';
 import { GetHeroById } from '../helpers/GetHeroById';
 
 // UseMemo para memorizar valores
@@ -9,10 +9,13 @@ export const HeroPage = () => {
   const { id } = useParams();
   // useMemo dispara el callback cada que la dependencia cambie (id)
   const hero = useMemo(() => GetHeroById(id), [id]); // funciones que llaman por algun cambio de estado si no me morizo vuelvo a disparar
+
+  const locatio = useLocation(); // obtenemos la ubicacion donde nos encontramos
   const navigate = useNavigate();
 
   const onNavigateReturn = () => {
-    console.log(hero.publisher);
+    console.log({ locatio }, { navigate });
+
     if (hero.publisher.toUpperCase().includes('MARVEL'))
       navigate('/marvel', { replace: true });
     else navigate('/dc', { replace: true });

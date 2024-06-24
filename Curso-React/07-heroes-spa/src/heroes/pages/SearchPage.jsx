@@ -5,7 +5,7 @@ import { useForm } from '../../hooks/useForm';
 import { GetHeroesByName } from '../helpers/GetHeroesByName';
 
 export const Search = () => {
-  const title = 'Search';
+  const title = 'Bucador de Heroes';
 
   // Aqui obtengo la info para el URL:
   const navigate = useNavigate(); // obtenemos la navegacion
@@ -51,7 +51,7 @@ export const Search = () => {
           <hr />
           <div className="alert alert-primary">sarch a Hero</div>
           <div className="alert alert-primary">
-            No hero wjth <b> {q}</b>
+            No hero:<b> {q}</b>
           </div>
           <div>
             {heros.map((hero) => (
