@@ -12,6 +12,7 @@ export const HeroeCard = ({
   characters,
 }) => {
   const heroImage = `../src/assets/heroes/${id}.jpg`;
+  // animaciones link https://animate.style/
 
   return (
     <>

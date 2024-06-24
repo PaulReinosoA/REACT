@@ -12,7 +12,7 @@ export const HeroPage = () => {
   const navigate = useNavigate();
 
   const onNavigateReturn = () => {
-    // console.log(hero.publisher);
+    console.log(hero.publisher);
     if (hero.publisher.toUpperCase().includes('MARVEL'))
       navigate('/marvel', { replace: true });
     else navigate('/dc', { replace: true });
