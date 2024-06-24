@@ -1,9 +1,15 @@
+import { useContext } from 'react';
 import { useNavigate } from 'react-router';
+import { AuthContext } from '../context';
 
 export const LoginPage = () => {
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const onLogin = () => {
-    navigate('/search', { replace: true }); // replace evita que la persona vuelva al historial anterior en el navegador con la fecha hacia atras
+    const lastPath = localStorage.getItem('lastPath') || '/';
+
+    login('Paul R.A.');
+    navigate(lastPath, { replace: true }); // replace evita que la persona vuelva al historial anterior en el navegador con la fecha hacia atras
   };
   return (
     <>

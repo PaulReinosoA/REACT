@@ -1,8 +1,11 @@
+import { AuthProvider } from './auth';
 import { AppRouter } from './router/AppRouter';
 
 export const HeroesApp = () => (
   // const title = 'HeroesApp';
   <>
-    <AppRouter />
+    <AuthProvider>
+      <AppRouter children={{}} />
+    </AuthProvider>
   </>
 );

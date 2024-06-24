@@ -10,15 +10,16 @@ export const HeroPage = () => {
   // useMemo dispara el callback cada que la dependencia cambie (id)
   const hero = useMemo(() => GetHeroById(id), [id]); // funciones que llaman por algun cambio de estado si no me morizo vuelvo a disparar
 
-  const locatio = useLocation(); // obtenemos la ubicacion donde nos encontramos
+  // obtenemos la ubicacion donde nos encontramos
   const navigate = useNavigate();
 
   const onNavigateReturn = () => {
-    console.log({ locatio }, { navigate });
-
-    if (hero.publisher.toUpperCase().includes('MARVEL'))
-      navigate('/marvel', { replace: true });
-    else navigate('/dc', { replace: true });
+    const previewPath = localStorage.getItem('previewPath') || '/';
+    // const lastpath = localStorage.getItem('lastpath') || '/';    
+    navigate(previewPath, { replace: true });
+    // if (hero.publisher.toUpperCase().includes('MARVEL'))
+    //   navigate('/marvel', { replace: true });
+    // else navigate('/dc', { replace: true });
   };
 
   if (!hero) {

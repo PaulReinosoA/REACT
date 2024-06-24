@@ -21,7 +21,7 @@ export const SimpleForm = () => {
   useEffect(() => {
     // primer argumento es el callback
     // console.log('formState cambio');
-  }, [formState]); // dependencia -->condiciones para disparar useEfect []->dispara una ves en el render
+  }, [formState]); // dependencia -->condiciones para disparar ct []->dispara una ves en el render
 
   useEffect(() => {
     // primer argumento es el callback

@@ -45,8 +45,7 @@ export const HeroeCard = ({
   );
 };
 
-HeroeCard.propTypes = {
-  publisher: PropTypes.string.isRequired,
+HeroeCard.propTypes = {  
   id: PropTypes.string.isRequired,
   superhero: PropTypes.string.isRequired,
   publisher: PropTypes.string.isRequired,

@@ -1,9 +1,15 @@
+import { useContext } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../auth';
 
 export const Navbar = () => {
   const navigate = useNavigate();
 
+  // const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
+
   const onLogout = () => {
+    logOut();
     navigate('/login', { replace: true }); // replace evita que la persona vuelva al historial anterior en el navegador con la fecha hacia atras
   };
 
@@ -46,7 +52,9 @@ export const Navbar = () => {
 
       <div className="navbar-collapse collapse w-100 order-3 dual-collapse2 d-flex justify-content-end">
         <ul className="navbar-nav ml-auto">
-          <span className="nav-item nav-link text-primary">Paul</span>
+          <span className="nav-item nav-link text-primary">
+            {user === null ? '' : user.name}
+          </span>
           <button
             type="button"
             className="nav-item nav-link btn"
