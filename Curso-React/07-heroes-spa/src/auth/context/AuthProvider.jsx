@@ -1,12 +1,12 @@
 import React, { useReducer } from 'react';
+import PropTypes from 'prop-types';
 import { AuthContext } from './AuthContext';
 import { authReducer } from './authReducer';
-import PropTypes from 'prop-types';
 import { types } from '../types/types';
 
-const initialState = {
-  logged: false,
-};
+// const initialState = {
+//   logged: false,
+// };
 // leo del localstorage
 const init = () => {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -47,5 +47,5 @@ export const AuthProvider = ({ children }) => {
 };
 
 AuthProvider.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.objectOf.isRequired,
 };

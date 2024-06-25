@@ -7,26 +7,24 @@ import { GetHeroesByName } from '../helpers/GetHeroesByName';
 export const Search = () => {
   const title = 'Bucador de Heroes';
 
-  
   // Aqui obtengo la info para el URL:
   const navigate = useNavigate(); // obtenemos la navegacion
   const locatio = useLocation(); // obtenemos la ubicacion donde nos encontramos
   const { q = '' } = queryString.parse(locatio.search); // opcional para parcear los paramtros opcionales
   const heros = GetHeroesByName(q);
-  
-  const { pathname, search } = useLocation();
 
-  
+  // const { pathname, search } = useLocation();
+
   const { searchText, onInputChange } = useForm({
     searchText: q,
   });
-  
+
   const onSearchSubmit = (event) => {
-     // const lastpath = pathname + search;
+    // const lastpath = pathname + search;
     // localStorage.setItem('lastPath', lastpath);
     // const lastPath = localStorage.getItem('lastPath') || '/';
     // console.log('lastPath', { lastPath });
-    
+
     event.preventDefault(); // evita el full refresh del formulario
     // if (searchText.trim().length <= 1) return;
     navigate(`?q=${searchText}`); // envi el prametro al url

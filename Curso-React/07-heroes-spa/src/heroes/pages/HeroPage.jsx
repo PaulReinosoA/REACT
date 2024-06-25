@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router';
+import { Navigate, useNavigate, useParams } from 'react-router';
 import { GetHeroById } from '../helpers/GetHeroById';
 
 // UseMemo para memorizar valores
@@ -15,7 +15,7 @@ export const HeroPage = () => {
 
   const onNavigateReturn = () => {
     const previewPath = localStorage.getItem('previewPath') || '/';
-    // const lastpath = localStorage.getItem('lastpath') || '/';    
+    // const lastpath = localStorage.getItem('lastpath') || '/';
     navigate(previewPath, { replace: true });
     // if (hero.publisher.toUpperCase().includes('MARVEL'))
     //   navigate('/marvel', { replace: true });
