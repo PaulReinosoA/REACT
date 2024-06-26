@@ -1,16 +1,9 @@
-// import { useReducer } from 'react';
-import { authReducer } from '../../../auth/context/authReducer';
+// https://github.com/microsoft/cascadia-code/releases/tag/v1911.21
+// 03 caskaydia nerd font --> En uso
+// 01 Mononoki nerd font
 
-// const init = () => {
-//   const user = {
-//     id: 'ABC',
-//     name: 'Paul Reinoso A.',
-//   };
-//   return {
-//     logged: !!user,
-//     user,
-//   };
-// };
+import { authReducer } from '../../../auth/context/authReducer';
+import { types } from '../../../auth/types/types';
 
 describe('Pruebas sobre authReducer', () => {
   test('Debe de retornar el estado por defecto', () => {
@@ -23,7 +16,31 @@ describe('Pruebas sobre authReducer', () => {
     expect(state).toStrictEqual({ logged: false });
   });
 
-  test('Debe de llamar el login autenticar yestablecer el user', () => {});
+  test('Debe de llamar el login autenticar yestablecer el user', () => {
+    const initialState = {
+      logged: false,
+    };
 
-  test('Debe de borrar el name del usuario y logout en false', () => {});
+    const action = {
+      type: types.login,
+      payload: { name: 'Paul Reinoso A.', id: '123' },
+    };
+
+    const state = authReducer(initialState, action);
+
+    expect(state).toEqual({ logged: true, user: action.payload });
+  });
+
+  test('Debe de borrar el name del usuario y logout en false', () => {
+    const initialState = {
+      logged: false,
+      user: { name: 'Paul Reinoso A.', id: '123' },
+    };
+    const action = {
+      type: types.logout,
+    };
+    const state = authReducer(initialState, action);
+
+    expect(state).toEqual({ logged: false });
+  });
 });
