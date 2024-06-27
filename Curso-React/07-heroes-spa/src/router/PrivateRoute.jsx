@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../auth';
 import { Navigate, useLocation } from 'react-router';
+import { PropTypes } from 'prop-types';
+import { AuthContext } from '../auth';
 
 export const PrivateRoute = ({ children }) => {
   // significa que recibire otro componenet hight order componen
@@ -10,11 +11,18 @@ export const PrivateRoute = ({ children }) => {
 
   const [previewPathState, setPreviewPathState] = useState('/');
 
-  useEffect(() => {    
+  useEffect(() => {
     setPreviewPathState(localStorage.getItem('lastpath') || '/');
     localStorage.setItem('previewPath', previewPathState);
   }, [lastpath]);
 
+  // const previewPathState = localStorage.getItem('lastpath') || '/';
+  // localStorage.setItem('previewPath', previewPathState);
+
   localStorage.setItem('lastpath', lastpath);
   return logged ? children : <Navigate to="/login" />;
+};
+
+PrivateRoute.propTypes = {
+  children: PropTypes.node.isRequired,
 };
