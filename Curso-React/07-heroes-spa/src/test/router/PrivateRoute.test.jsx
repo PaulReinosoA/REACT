@@ -26,7 +26,7 @@ describe('Pruebas sobre PrivateRoute', () => {
     );
 
     // screen.debug();
-    // expect(screen.getByText('Prueba Ruta Publica')).toBeTruthy();
-    expect(localStorage.setItem).toHaveBeenCalledWith('previewPath', 'marvel');
+    expect(localStorage.setItem).toHaveBeenCalledWith('previewPath', '/');
+    expect(localStorage.setItem).toHaveBeenCalledWith('lastpath', '/marvel');
   });
 });

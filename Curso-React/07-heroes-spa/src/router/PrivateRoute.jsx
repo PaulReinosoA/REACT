@@ -16,10 +16,11 @@ export const PrivateRoute = ({ children }) => {
     localStorage.setItem('previewPath', previewPathState);
   }, [lastpath]);
 
+  localStorage.setItem('lastpath', lastpath);
+
   // const previewPathState = localStorage.getItem('lastpath') || '/';
   // localStorage.setItem('previewPath', previewPathState);
 
-  localStorage.setItem('lastpath', lastpath);
   return logged ? children : <Navigate to="/login" />;
 };
 

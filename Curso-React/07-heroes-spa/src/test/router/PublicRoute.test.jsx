@@ -21,7 +21,7 @@ describe('Pruebas sobre PublicRoute', () => {
     expect(screen.getByText('Prueba Ruta Publica')).toBeTruthy();
   });
 
-  test('debe mostrar el navigate(marvel) si esta authenticado', () => {
+  test('debe navegar si esta authenticado', () => {
     const contextValue = {
       logged: true,
       user: {

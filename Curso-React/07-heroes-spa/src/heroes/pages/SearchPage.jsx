@@ -41,7 +41,7 @@ export const Search = () => {
         <div className="col-5">
           <h4>Searching</h4>
           <hr />
-          <form onSubmit={(event) => onSearchSubmit(event)}>
+          <form aria-label="form" onSubmit={(event) => onSearchSubmit(event)}>
             <input
               type="text"
               placeholder="Search a hero"
@@ -70,10 +70,11 @@ export const Search = () => {
             sarch a Hero
           </div>
           <div
+            aria-label="displayNoneShowErrorSearch"
             className="alert alert-danger animate__animated animate__fadeIn"
             style={{ display: showErrorSearch ? '' : 'none' }}
           >
-            No hero:<b>{q}</b>
+            No hero with:<b>{q}</b>
           </div>
           <div>
             {heros.map((hero) => (
