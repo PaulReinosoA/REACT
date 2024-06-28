@@ -11,5 +11,5 @@ export const PublicRoute = ({ children }) => {
 };
 
 PublicRoute.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.element.isRequired,
 };
