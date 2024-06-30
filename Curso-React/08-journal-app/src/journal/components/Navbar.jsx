@@ -1,37 +1,40 @@
-import { LogoutOutlined, MenuOutlined } from '@mui/icons-material';
 import { AppBar, Grid, IconButton, Toolbar, Typography } from '@mui/material';
-import { PropTypes } from 'prop-types';
-import React from 'react';
+import { LogoutOutlined, MenuOutlined } from '@mui/icons-material';
 
-export const Navbar = ({ drawerWidth }) => (
-  <AppBar // hace que el navabr tenga un espacio para el sideba
-    position="fixed"
-    sx={{
-      width: { sm: `calc(100% - ${drawerWidth}px)` },
-      ml: { sm: `${drawerWidth}px` },
-    }}
-  >
-    <Toolbar>
-      <IconButton // hace qe el boton aparesca dependiendo del tamaño
-        color="inherit"
-        edge="start"
-        sx={{ mr: 2, display: { sm: 'none' } }}
-      >
-        <MenuOutlined />
-      </IconButton>
-
-      <Grid container direction="row" justifyContent="space-around">
-        <Typography variant="h6" noWrap component="div">
-          Journal app
-        </Typography>
-        <IconButton color="error">
-          <LogoutOutlined />
+export const Navbar = ({ drawerWidth = 240 }) => {
+  return (
+    <AppBar
+      position="fixed"
+      sx={{
+        width: { sm: `calc(100% - ${drawerWidth}px)` },
+        ml: { sm: `${drawerWidth}px` },
+      }}
+    >
+      <Toolbar>
+        <IconButton
+          color="inherit"
+          edge="start"
+          sx={{ mr: 2, display: { sm: 'none' } }}
+        >
+          <MenuOutlined />
         </IconButton>
-      </Grid>
-    </Toolbar>
-  </AppBar>
-);
 
-Navbar.propTypes = {
-  drawerWidth: PropTypes.number.isRequired,
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Typography variant="h6" noWrap component="div">
+            {' '}
+            JournalApp{' '}
+          </Typography>
+
+          <IconButton color="error">
+            <LogoutOutlined />
+          </IconButton>
+        </Grid>
+      </Toolbar>
+    </AppBar>
+  );
 };
