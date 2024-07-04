@@ -18,7 +18,7 @@ const columns = [
     renderCell: (image) => (
       <div className="card-grid">
         <div className="card">
-          <img src={image.value} />
+          <img alt="imagen" src={image.value} />
         </div>
       </div>
     ),
