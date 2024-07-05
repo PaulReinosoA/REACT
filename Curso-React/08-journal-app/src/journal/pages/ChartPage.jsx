@@ -3,6 +3,6 @@ import { ChartView } from '../view/ChartView';
 
 export const ChartPage = () => (
   <JournalLayout>
-    <ChartView props="" />
+    <ChartView />
   </JournalLayout>
 );
