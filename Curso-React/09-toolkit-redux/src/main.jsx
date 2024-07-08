@@ -5,6 +5,7 @@ import './index.css';
 import { store } from './store';
 import { Provider } from 'react-redux';
 import { PokemonApp } from './PokemonApp.jsx';
+// import { TodoApp } from './TodoApp.jsx'; RTK Query
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
