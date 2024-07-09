@@ -30,5 +30,6 @@ module.exports = {
       { allowConstantExport: true },
     ],
     quotes: ["error", "single"],
+    "no-param-reassign": ["error", { "props": false }],
   },
 };
