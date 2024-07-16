@@ -1,6 +1,10 @@
 /* eslint-disable consistent-return */
-import { singInWithGoogl } from '../../firebase/providers';
 import { chekingCredentials, login, logout } from './authSlice';
+import {
+  loginWithEmailPassword,
+  registerWithEmailPassword,
+  singInWithGoogl,
+} from '../../firebase/providers';
 
 // THUNKS --> FUNCIONES QUE DESPACHAN un accion ASINCRONA,
 // acciones con taeras asincronas  si son sincronas con reducers,
@@ -16,3 +20,27 @@ export const startGoogleSingIn = () => async (dispatch) => {
   // delete result.ok; // elimina esa propiedad, pero da error en el codigo
   dispatch(login(result));
 };
+
+export const startRegisterWithEmailPassword =
+  (email, password, displayName) => async (dispatch) => {
+    dispatch(chekingCredentials());
+    const { ok, uid, photoURL, errorMessage } = await registerWithEmailPassword(
+      email,
+      password,
+      displayName
+    );
+    if (!ok) return dispatch(logout({ errorMessage }));
+
+    dispatch(login({ uid, displayName, email, photoURL }));
+  };
+
+export const startLoginWithEmailPassword =
+  (email, password) => async (dispatch) => {
+    dispatch(chekingCredentials());
+    const { ok, uid, photoURL, errorMessage, displayName } =
+      await loginWithEmailPassword({ email, password });
+    console.log(ok, uid, photoURL, errorMessage, displayName);
+    if (!ok) return dispatch(logout({ errorMessage }));
+
+    dispatch(login({ uid, displayName, email, photoURL }));
+  };

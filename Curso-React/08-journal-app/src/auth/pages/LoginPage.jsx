@@ -5,22 +5,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useMemo } from 'react';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
-import { checkingAuthentication, startGoogleSingIn } from '../../store/auth';
+import {
+  checkingAuthentication,
+  startGoogleSingIn,
+  startLoginWithEmailPassword,
+} from '../../store/auth';
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.auth);
 
   const { email, password, onInputChange } = useForm({
-    email: 'paulreinsooares463@gmail.com',
-    password: '123456789',
+    email: '',
+    password: '',
   });
   const isAuthenticating = useMemo(() => status === 'checking', [status]);
 
   const onSubmit = (event) => {
     event.preventDefault();
     // console.log({ email, password });
+    //! no es esta la accion a dispachar para el login
     dispatch(checkingAuthentication(email, password));
+    dispatch(startLoginWithEmailPassword(email, password));
   };
 
   const onGoogleSingIn = () => {

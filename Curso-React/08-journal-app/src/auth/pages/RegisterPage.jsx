@@ -1,13 +1,25 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { Button, Grid, Link, TextField, Typography } from '@mui/material';
+import {
+  Alert,
+  Button,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
+import { startRegisterWithEmailPassword } from '../../store/auth/thunks';
 
 export const RegisterPage = () => {
+  const dispatch = useDispatch();
+
   const formData = {
-    email: 'paulreinsooares463@gmail.com',
-    password: '123456789',
-    displayNme: 'Paul Reinoso',
+    email: '',
+    password: '',
+    displayNme: '',
   };
 
   const formValidations = {
@@ -18,6 +30,14 @@ export const RegisterPage = () => {
     ],
     displayNme: [(value) => value.length >= 1, 'El nombre es obligatorio.'],
   };
+
+  const { status, errorMessage } = useSelector((state) => state.auth);
+  const isCheckingAuthentication = useMemo(
+    () => status === 'checking',
+    [status],
+  );
+
+  const [formSubmited, setformSubmited] = useState(false);
 
   const {
     formState,
@@ -33,13 +53,16 @@ export const RegisterPage = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log(formState);
+    setformSubmited(true);
+    if (!isFormValid) return;
+    // console.log(formState);
+    dispatch(startRegisterWithEmailPassword(formState));
   };
 
   return (
     <>
       <AuthLayout title="Crear Cuenta">
-        <h1>Form valido: {isFormValid ? 'Valido' : 'incorrecto'}</h1>
+        {/* <h1>Form valido: {isFormValid ? 'Valido' : 'incorrecto'}</h1> */}
         <form onSubmit={onSubmit}>
           <Grid container>
             <Grid item xs={12} sx={{ mt: 2 }}>
@@ -51,7 +74,7 @@ export const RegisterPage = () => {
                 name="displayNme"
                 value={displayNme}
                 onChange={onInputChange}
-                error={!displayNmeValid}
+                error={!!displayNmeValid && formSubmited}
                 helperText={displayNmeValid}
               />
             </Grid>
@@ -64,6 +87,8 @@ export const RegisterPage = () => {
                 name="email"
                 value={email}
                 onChange={onInputChange}
+                error={!!emailValid && formSubmited}
+                helperText={emailValid}
               />
             </Grid>
             <Grid item xs={12} sx={{ mt: 2 }}>
@@ -75,11 +100,21 @@ export const RegisterPage = () => {
                 name="password"
                 value={password}
                 onChange={onInputChange}
+                error={!!passwordValid && formSubmited}
+                helperText={passwordValid}
               />
             </Grid>
             <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
-              <Grid item xs={12} sm={6}>
-                <Button type="submit" variant="contained" fullWidth>
+              <Grid display={!!errorMessage ? '' : 'none'} item xs={12} sm={12}>
+                <Alert severity="error">{errorMessage}</Alert>
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <Button
+                  disabled={isCheckingAuthentication}
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                >
                   Crear Cuenta
                 </Button>
               </Grid>
