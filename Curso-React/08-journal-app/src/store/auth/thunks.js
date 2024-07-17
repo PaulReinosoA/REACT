@@ -27,7 +27,7 @@ export const startRegisterWithEmailPassword =
     const { ok, uid, photoURL, errorMessage } = await registerWithEmailPassword(
       email,
       password,
-      displayName
+      displayName,
     );
     if (!ok) return dispatch(logout({ errorMessage }));
 
@@ -37,10 +37,12 @@ export const startRegisterWithEmailPassword =
 export const startLoginWithEmailPassword =
   (email, password) => async (dispatch) => {
     dispatch(chekingCredentials());
-    const { ok, uid, photoURL, errorMessage, displayName } =
-      await loginWithEmailPassword({ email, password });
-    console.log(ok, uid, photoURL, errorMessage, displayName);
+    const { ok, uid, photoURL, errorMessage } = await loginWithEmailPassword({
+      email,
+      password,
+    });
+    // console.log(ok, uid, photoURL, errorMessage, email);
     if (!ok) return dispatch(logout({ errorMessage }));
 
-    dispatch(login({ uid, displayName, email, photoURL }));
+    dispatch(login({ uid, email, photoURL }));
   };

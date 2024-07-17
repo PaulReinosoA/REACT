@@ -43,7 +43,7 @@ export const registerWithEmailPassword = async ({
     const result = await createUserWithEmailAndPassword(
       FirebaseAuth,
       email,
-      password
+      password,
     );
 
     const { uid, photoURL } = result.user;
@@ -72,10 +72,11 @@ export const loginWithEmailPassword = async ({ email, password }) => {
     const result = await signInWithEmailAndPassword(
       FirebaseAuth,
       email,
-      password
+      password,
     );
 
     const { uid, photoURL } = result.user;
+
     return {
       ok: true,
       email,
