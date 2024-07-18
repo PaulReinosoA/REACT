@@ -2,14 +2,15 @@
 import { chekingCredentials, login, logout } from './authSlice';
 import {
   loginWithEmailPassword,
+  logoutFirebase,
   registerWithEmailPassword,
   singInWithGoogl,
 } from '../../firebase/providers';
 
 // THUNKS --> FUNCIONES QUE DESPACHAN un accion ASINCRONA,
 // acciones con taeras asincronas  si son sincronas con reducers,
-export const checkingAuthentication = (email, password) => async (dispatch) => {
-  console.log(email, password);
+export const checkingAuthentication = () => async (dispatch) => {
+  // console.log(email, password);
   dispatch(chekingCredentials());
 };
 
@@ -37,12 +38,18 @@ export const startRegisterWithEmailPassword =
 export const startLoginWithEmailPassword =
   (email, password) => async (dispatch) => {
     dispatch(chekingCredentials());
-    const { ok, uid, photoURL, errorMessage } = await loginWithEmailPassword({
-      email,
-      password,
-    });
+    const { ok, uid, photoURL, displayName, errorMessage } =
+      await loginWithEmailPassword({
+        email,
+        password,
+      });
     // console.log(ok, uid, photoURL, errorMessage, email);
     if (!ok) return dispatch(logout({ errorMessage }));
 
-    dispatch(login({ uid, email, photoURL }));
+    dispatch(login({ uid, email, photoURL, displayName }));
   };
+
+export const startLogout = () => async (dispatch) => {
+  await logoutFirebase();
+  dispatch(logout({}));
+};

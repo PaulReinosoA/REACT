@@ -4,6 +4,7 @@ import React from 'react';
 
 export const NothingSelectedView = () => (
   <Grid
+    className="animate__animated animate__fadeIn animate__faster"
     container
     spacing={0}
     direction="column"

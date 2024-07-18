@@ -19,7 +19,7 @@ export const RegisterPage = () => {
   const formData = {
     email: '',
     password: '',
-    displayNme: '',
+    displayName: '',
   };
 
   const formValidations = {
@@ -28,7 +28,7 @@ export const RegisterPage = () => {
       (value) => value.length >= 6,
       'El password debe tener mas de 6 caracteres',
     ],
-    displayNme: [(value) => value.length >= 1, 'El nombre es obligatorio.'],
+    displayName: [(value) => value.length >= 1, 'El nombre es obligatorio.'],
   };
 
   const { status, errorMessage } = useSelector((state) => state.auth);
@@ -41,12 +41,12 @@ export const RegisterPage = () => {
 
   const {
     formState,
-    displayNme,
+    displayName,
     email,
     password,
     onInputChange,
     isFormValid,
-    displayNmeValid,
+    displayNameValid,
     emailValid,
     passwordValid,
   } = useForm(formData, formValidations);
@@ -71,11 +71,11 @@ export const RegisterPage = () => {
                 type="text"
                 placeholder="Nombre Completo"
                 fullWidth
-                name="displayNme"
-                value={displayNme}
+                name="displayName"
+                value={displayName}
                 onChange={onInputChange}
-                error={!!displayNmeValid && formSubmited}
-                helperText={displayNmeValid}
+                error={!!displayNameValid && formSubmited}
+                helperText={displayNameValid}
               />
             </Grid>
             <Grid item xs={12} sx={{ mt: 2 }}>

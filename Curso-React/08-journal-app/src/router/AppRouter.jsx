@@ -1,21 +1,29 @@
-import React from 'react';
-import { Route, Routes } from 'react-router';
-import { useSelector } from 'react-redux';
+import { Navigate, Route, Routes } from 'react-router';
 import { AuthRoutes } from '../auth/routes/AuthRoutes';
 import { JournalRouter } from '../journal/routes/JournalRouter';
 import { CheckingAuth } from '../ui';
+import { useCheckingAuth } from '../hooks';
 
 export const AppRouter = () => {
-  const { status } = useSelector((state) => state.auth);
-  console.log(status);
+  const { status } = useCheckingAuth();
+
   if (status === 'checking') {
     return <CheckingAuth />;
   }
+
   return (
     <Routes>
-      <Route path="/auth/*" element={<AuthRoutes />} />
+      {status === 'authenticated' ? (
+        <Route path="/*" element={<JournalRouter to="/" />} />
+      ) : (
+        <Route path="/auth/*" element={<AuthRoutes />} />
+      )}
 
-      <Route path="/*" element={<JournalRouter to="/" />} />
+      <Route path="/*" element={<Navigate to="/auth/login" />} />
+      {/* Login y registro */}
+      {/* <Route path="/auth/*" element={<AuthRoutes />} /> */}
+      {/* journal app */}
+      {/* <Route path="/*" element={<JournalRouter to="/" />} /> */}
     </Routes>
   );
 };

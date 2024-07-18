@@ -7,7 +7,10 @@ import { SideBar } from '../../journal/components/SideBar';
 const drawerWidth = 240;
 
 export const JournalLayout = ({ children }) => (
-  <Box sx={{ display: 'flex' }}>
+  <Box
+    className="animate__animated animate__fadeIn animate__faster"
+    sx={{ display: 'flex' }}
+  >
     {/* Navbar */}
     <Navbar drawerWidth={drawerWidth} />
     {/* Sidebar */}
@@ -21,6 +24,5 @@ export const JournalLayout = ({ children }) => (
 );
 
 JournalLayout.propTypes = {
-  children: PropTypes.array.isRequired,
-  // || PropTypes.element.isRequired 
+  children: PropTypes.array.isRequired ,// || PropTypes.element.isRequired,
 };

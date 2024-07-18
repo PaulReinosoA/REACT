@@ -75,13 +75,14 @@ export const loginWithEmailPassword = async ({ email, password }) => {
       password,
     );
 
-    const { uid, photoURL } = result.user;
+    const { uid, photoURL, displayName } = result.user;
 
     return {
       ok: true,
       email,
       photoURL,
       uid,
+      displayName,
     };
   } catch (error) {
     // aqui van las validaciones de los emsnajes de errro de firebase
@@ -93,3 +94,5 @@ export const loginWithEmailPassword = async ({ email, password }) => {
     };
   }
 };
+
+export const logoutFirebase = async () => FirebaseAuth.signOut();
