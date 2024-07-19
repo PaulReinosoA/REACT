@@ -29,7 +29,14 @@ export const SideBar = ({ drawerWidth = 240 }) => {
 
         <List>
           {notes.map((note) => (
-            <SideBarItem key={note.id} title={note.title} body={note.body} />
+            <SideBarItem
+              key={note.id}
+              title={note.title}
+              body={note.body}
+              date={note.date}
+              id={note.id}
+              imageURL={note.imageURL === undefined ? [] : note.imageURL}
+            />
           ))}
         </List>
       </Drawer>
