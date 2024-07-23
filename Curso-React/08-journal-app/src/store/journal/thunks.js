@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import { collection, deleteDoc, doc, setDoc } from 'firebase/firestore/lite';
 import { FirebaseDB } from '../../firebase/config';
 import {
@@ -21,6 +22,7 @@ export const startNewNote = () => async (dispatch, getState) => {
   const newNote = {
     title: '',
     body: '',
+    imageURL: [],
     date: new Date().getTime(),
   };
 
@@ -69,16 +71,19 @@ export const startUploadingFiles =
     }
 
     const photosUrls = await Promise.all(fileUploadPromises);
-
+    // console.log(photosUrls);
     dispatch(setPhotosToActiveNote(photosUrls));
   };
+
+// Install Cloudinary --> npm i @cloudinary/url-gen @cloudinary/react
+// https://console.cloudinary.com/pm/c-c78086941ff11976e3b433c843f077/getting-started
 
 export const startDeletingNote = () => async (dispatch, getState) => {
   const { uid } = getState().auth;
   const { active: note } = getState().journal;
-
+  // elimino de firebase
   const docRef = doc(FirebaseDB, `${uid}/journal/notes/${note.id}`);
   await deleteDoc(docRef);
-
+  // elimino de mi store(data local)
   dispatch(deleteNoteById(note.id));
 };

@@ -52,6 +52,7 @@ export const NoteView = () => {
 
   const onFileInputChange = ({ target }) => {
     if (target.files === 0) return;
+    // console.log(target.files);
     dispatch(startUploadingFiles(target.files));
   };
 
@@ -81,7 +82,7 @@ export const NoteView = () => {
           onChange={onFileInputChange}
           style={{ display: 'none' }}
         />
-
+        {/* permite tomar el clic del impout simulado como si fuera el icono que toma el evento */}
         <IconButton
           color="primary"
           disabled={isSaving}
@@ -135,7 +136,7 @@ export const NoteView = () => {
       </Grid>
 
       {/* Image gallery */}
-      <ImageGallery images={note.imageUrls} />
+      <ImageGallery images={note.imageURL} />
     </Grid>
   );
 };

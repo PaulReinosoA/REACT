@@ -6,6 +6,7 @@ import {
   registerWithEmailPassword,
   singInWithGoogl,
 } from '../../firebase/providers';
+import { clearNotesLogout } from '../journal/journalSlice';
 
 // THUNKS --> FUNCIONES QUE DESPACHAN un accion ASINCRONA,
 // acciones con taeras asincronas  si son sincronas con reducers,
@@ -51,5 +52,6 @@ export const startLoginWithEmailPassword =
 
 export const startLogout = () => async (dispatch) => {
   await logoutFirebase();
+  dispatch(clearNotesLogout());
   dispatch(logout({}));
 };

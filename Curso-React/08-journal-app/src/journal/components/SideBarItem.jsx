@@ -19,6 +19,11 @@ export const SideBarItem = ({ title, body, id, date, imageURL }) => {
     [title],
   );
 
+  const newBody = useMemo(
+    () => (body.length >= 35 ? `${body.substring(0, 35)}...` : body),
+    [body],
+  );
+
   const onItemListSelect = () => {
     dispathc(setActiveNote({ title, body, id, date, imageURL }));
   };
@@ -31,7 +36,7 @@ export const SideBarItem = ({ title, body, id, date, imageURL }) => {
         </ListItemIcon>
         <Grid container>
           <ListItemText primary={newTitle} />
-          <ListItemText secondary={body} />
+          <ListItemText secondary={newBody} />
           <ListItemText
             secondary={`Fecha: ${new Date(date).toLocaleDateString()}`}
           />
@@ -46,5 +51,5 @@ SideBarItem.propTypes = {
   body: PropTypes.string.isRequired,
   date: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
-  imageURL: PropTypes.array.isRequired,
+  imageURL: PropTypes.arrayOf(String).isRequired,
 };
