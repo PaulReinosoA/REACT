@@ -1,8 +1,13 @@
 import { UseFetch } from '../hooks/UseFetch';
 
+const apiKey = 'c6671638880e82d6ea764ca12b6d496d';
+const hash = '7c6fca0165aa38ee903bd9632f928e7b';
+const ts = '1';
+const limit = '10';
+
 export const getData = () => {
-  const url =
-    'http://gateway.marvel.com/v1/public/comics?ts=1000&apikey=c6671638880e82d6ea764ca12b6d496d&hash=899b4663af77b12d1801f3e1039c1aaa&limit=100';
+  const url = `http://gateway.marvel.com/v1/public/comics?ts=${ts}&apikey=${apiKey}&hash=${hash}&limit=${limit}`;
+  // console.log('url:', url);
   const { data, isLoading } = UseFetch(url);
   const results = data === null ? [] : data.results;
   // console.log('getData:results', results);
