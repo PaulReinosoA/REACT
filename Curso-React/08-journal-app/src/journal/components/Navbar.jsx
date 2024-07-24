@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { startLogout } from '../../store/auth/thunks';
 
-export const Navbar = ({ drawerWidth = 240 }) => {
+export const Navbar = ({ toggleSidebar, drawerWidth }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); // obtenemos la navegacion
   const onLogout = () => {
@@ -31,16 +31,17 @@ export const Navbar = ({ drawerWidth = 240 }) => {
   return (
     <AppBar
       position="fixed"
-      sx={{
-        width: { sm: `calc(100% - ${drawerWidth}px)` },
-        ml: { sm: `${drawerWidth}px` },
-      }}
+      // sx={{
+      //   width: { sm: `calc(100% - ${drawerWidth}px)` },
+      //   ml: { sm: `${drawerWidth}px` },
+      // }}
     >
       <Toolbar>
         <IconButton
+          onClick={toggleSidebar}
           color="inherit"
           edge="start"
-          sx={{ mr: 2, display: { sm: 'none' } }}
+          // sx={{ mr: 2, display: { sm: 'none' } }}
         >
           <MenuOutlined />
         </IconButton>
@@ -79,4 +80,5 @@ export const Navbar = ({ drawerWidth = 240 }) => {
 
 Navbar.propTypes = {
   drawerWidth: PropTypes.number.isRequired,
+  toggleSidebar: PropTypes.func.isRequired,
 };

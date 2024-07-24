@@ -3,18 +3,19 @@ import { PropTypes } from 'prop-types';
 import { useSelector } from 'react-redux';
 import { SideBarItem } from './SideBarItem';
 
-export const SideBar = ({ drawerWidth = 240 }) => {
+export const SideBar = ({ isActive, toggleSidebar, drawerWidth }) => {
   const { displayName } = useSelector((state) => state.auth);
   const { notes } = useSelector((state) => state.journal);
 
   return (
     <Box
       component="nav"
-      sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+      // sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
     >
       <Drawer
-        variant="permanent" // temporary
-        open
+        onClick={toggleSidebar}
+        variant="temporary" // temporary/permanent
+        open={isActive}
         sx={{
           display: { xs: 'block' },
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
@@ -46,4 +47,6 @@ export const SideBar = ({ drawerWidth = 240 }) => {
 
 SideBar.propTypes = {
   drawerWidth: PropTypes.number.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  toggleSidebar: PropTypes.func.isRequired,
 };

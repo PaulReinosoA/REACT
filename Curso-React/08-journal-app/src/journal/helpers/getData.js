@@ -6,7 +6,7 @@ const ts = '1';
 const limit = '10';
 
 export const getData = () => {
-  const url = `http://gateway.marvel.com/v1/public/comics?ts=${ts}&apikey=${apiKey}&hash=${hash}&limit=${limit}`;
+  const url = `https://gateway.marvel.com/v1/public/comics?ts=${ts}&apikey=${apiKey}&hash=${hash}&limit=${limit}`;
   // console.log('url:', url);
   const { data, isLoading } = UseFetch(url);
   const results = data === null ? [] : data.results;
