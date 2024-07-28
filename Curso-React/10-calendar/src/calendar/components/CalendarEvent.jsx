@@ -3,7 +3,7 @@ export const CalendarEvent = ({ event }) => {
   return (
     <>
       <strong>{title}</strong>
-      <spam> - {user.name}</spam>
+      <span> - {user.name}</span>
     </>
   );
 };
