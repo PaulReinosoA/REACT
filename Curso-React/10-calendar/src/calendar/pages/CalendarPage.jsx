@@ -2,7 +2,13 @@ import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 // import { addHours } from 'date-fns';
 import { getMessagesES, localizer } from '../helpers';
-import { CalendarEvent, CalendarModal, Navbar } from '../pages';
+import {
+  CalendarEvent,
+  CalendarModal,
+  FabAddNew,
+  FabDelete,
+  Navbar,
+} from '../pages';
 import { useState } from 'react';
 import { useUiStore } from '../../store/hooks';
 import { useCalendarStore } from '../../store/hooks/useCalendarStore';
@@ -30,7 +36,7 @@ export const CalendarPage = () => {
   };
   const onSelected = (event) => {
     // console.log({ clic: event });
-    setActiveEvent(event)
+    setActiveEvent(event);
   };
   const onViewChange = (event) => {
     console.log({ viewChange: event });
@@ -57,6 +63,8 @@ export const CalendarPage = () => {
         onView={onViewChange}
       />
       <CalendarModal />
+      <FabAddNew />
+      <FabDelete />
     </>
   );
 };

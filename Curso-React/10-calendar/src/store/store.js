@@ -7,6 +7,11 @@ import { calendarSlice } from './calendar/calendarSlice';
 export const store = configureStore({
   reducer: {
     ui: uiSlice.reducer,
-    calendar: calendarSlice.reducer,    
+    calendar: calendarSlice.reducer,
   },
+  // configuracion del middleware
+  middleware: (getDefaultmiddleware) =>
+    getDefaultmiddleware({
+      serializableCheck: false,
+    }),
 });

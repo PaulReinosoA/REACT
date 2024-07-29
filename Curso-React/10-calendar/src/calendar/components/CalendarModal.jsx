@@ -25,7 +25,7 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export const CalendarModal = () => {
-  const { activeEvent } = useCalendarStore();
+  const { activeEvent, startSavingEvent } = useCalendarStore();
   const { isDateModalOpen, clouseDateModal } = useUiStore();
   // const [isOpen, setIsOpen] = useState(true); //*isDateModalOpen lo remplaza
   const [formSubmited, setformSubmited] = useState(false);
@@ -66,7 +66,7 @@ export const CalendarModal = () => {
     // setIsOpen(false);
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     setformSubmited(true);
     const difference = differenceInSeconds(formValues.end, formValues.start);
@@ -74,11 +74,12 @@ export const CalendarModal = () => {
       Swal.fire('Fechas incorrectas', 'Revisar las fehas', 'error');
       return;
     }
-    if (formValues.title.length >= 0) return;
+    if (formValues.title.length <= 0) return;
     console.log(formValues);
     // todo:
-    //cerrer formulario
-    // errores en pantallas
+    await startSavingEvent(formValues);
+    clouseDateModal();
+    setformSubmited(false);
   };
 
   return (
