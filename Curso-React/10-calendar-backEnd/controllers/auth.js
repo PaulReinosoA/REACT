@@ -1,18 +1,30 @@
 // funciones del callback de auths
 //si el intelicense falla:, esta referencia ayuda
 const { response } = require('express');
+const Usuario = require('../models/Usuario');
 
 // req-> nos solicitan; res-> nosotros respondemos
-const crearUsuario = (req, res = response) => {
-  const { name, email, password } = req.body;  
+const crearUsuario = async (req, res = response) => {
+  // const { name, email, password } = req.body;
+  try {
+    const usuario = new Usuario(req.body);
 
-  res.status(201).json({
-    ok: true,
-    msg: 'registro',
-    name,
-    email,
-    password,
-  });
+    await usuario.save();
+
+    res.status(201).json({
+      ok: true,
+      msg: 'registro',
+      // name,
+      // email,
+      // password,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      ok: false,
+      msg: 'comuniquese con el administrador de la BD',
+    });
+  }
 };
 
 const loginUsuario = (req, res = responsees) => {

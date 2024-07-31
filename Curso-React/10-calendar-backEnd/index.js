@@ -2,10 +2,14 @@ const exprees = require('express');
 //! npm i dotenv --> configurar variables de entorino en el proyecto:
 require('dotenv').config();
 
+const { dbConnection } = require('./database/config');
 // console.log(process.env)
 
 //! crear el servidor de express;
 const app = exprees();
+
+//! Base de datos:
+dbConnection();
 
 //! directorio publico:
 // middlewre : funcion q se ejecuta siempre al hacer la peticion al servidor
