@@ -3,6 +3,7 @@
 const { response } = require('express');
 const bcrypt = require('bcryptjs');
 const Usuario = require('../models/Usuario');
+const { generarJWT } = require('../helpers/jwt');
 
 // req-> nos solicitan; res-> nosotros respondemos
 const crearUsuario = async (req, res = response) => {
@@ -26,10 +27,14 @@ const crearUsuario = async (req, res = response) => {
 
     await usuario.save();
 
+    // genero json web token
+    const token = await generarJWT(usuario.id, usuario.name);
+
     res.status(201).json({
       ok: true,
       uid: usuario.id,
       name: usuario.name,
+      token,
       msg: 'usuario creado exitosamente :)',
     });
   } catch (error) {
@@ -66,12 +71,14 @@ const loginUsuario = async (req, res = responsees) => {
     }
 
     // genero json web token
+    const token = await generarJWT(usuario.id, usuario.name);
 
     res.status(201).json({
       ok: true,
       uid: usuario.id,
       name: usuario.name,
-      msg: 'token conrrecto!!! :)',
+      token,
+      msg: 'singin conrrecto!!! :)',
     });
   } catch (error) {
     console.log(error);
