@@ -2,11 +2,12 @@
 RUTES DE USURIOS /mAuth  :
 host +  /api/auth
 */
-
 const exprees = require('express');
 const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
 const router = exprees.Router();
+const { validarJWT } = require('../middlewares/validar-jwt');
+
 const {
   crearUsuario,
   revalidarToken,
@@ -41,6 +42,6 @@ router.post(
   loginUsuario
 );
 
-router.get('/renew', revalidarToken);
+router.get('/renew', validarJWT, revalidarToken);
 
 module.exports = router;
