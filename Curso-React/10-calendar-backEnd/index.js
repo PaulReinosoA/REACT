@@ -25,6 +25,7 @@ app.use(exprees.json());
 //! Rutas:
 //* todo AUTH : crear, login , renew
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/events', require('./routes/events'));
 // app.get('/', (req, res) => {
 //   // console.log('se requiere el /');
 //   res.json({
@@ -32,7 +33,7 @@ app.use('/api/auth', require('./routes/auth'));
 //   });
 // });
 
-//* todo CRUD: eventps
+//* todo CRUD: eventos
 
 //! escucha peticiones:
 app.listen(process.env.PORT, () => {
