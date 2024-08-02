@@ -1,3 +1,4 @@
+const cors = require('cors');
 const exprees = require('express');
 //! npm i dotenv --> configurar variables de entorino en el proyecto:
 require('dotenv').config();
@@ -10,6 +11,9 @@ const app = exprees();
 
 //! Base de datos:
 dbConnection();
+
+//! CORS
+app.use(cors());
 
 //! directorio publico:
 // middlewre : funcion q se ejecuta siempre al hacer la peticion al servidor
