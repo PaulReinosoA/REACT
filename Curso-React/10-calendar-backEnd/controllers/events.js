@@ -12,7 +12,7 @@ const crearEvento = async (req, res = response) => {
 
   try {
     evento.user = req.uid;
-    const eventoGuardado = evento.save();
+    const eventoGuardado = await evento.save();
 
     return res.status(201).json({
       ok: true,
