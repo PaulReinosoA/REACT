@@ -20,6 +20,7 @@ const router = Router();
 router.use(validarJWT);
 
 router.get('/' /*, validarJWT*/, [], getEventos);
+
 router.post(
   '/' /*, validarJWT*/,
   [
@@ -30,7 +31,18 @@ router.post(
   ],
   crearEvento
 );
-router.post('/:id' /*, validarJWT*/, actualizarEvento);
+
+router.post(
+  '/:id' /*, validarJWT*/,
+  [
+    check('title', 'El titulo es obligatorio').not().isEmpty(),
+    check('start', 'La fecha de inicio es obligatoria').custom(isDate),
+    check('end', 'La fecha de fin es obligatoria').custom(isDate),
+    validarCampos,
+  ],
+  actualizarEvento
+);
+
 router.delete('/:id' /*, validarJWT*/, eliminarEvento);
 
 module.exports = router;

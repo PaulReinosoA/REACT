@@ -10,10 +10,10 @@ const validarJWT = (req, res = response, next) => {
       msg: 'No se pudo obtener el token en l apeticion',
     });
   }
-  console.log(token);
+  // console.log('token',token);
   try {
     const payload = jwt.verify(token, process.env.SECRET_JWT_SEED);
-    console.log(payload);
+    // console.log('payload', payload);
 
     req.uid = payload.uid;
     req.name = payload.name;

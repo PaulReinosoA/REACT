@@ -6,7 +6,7 @@ const isDate = (value) => {
     return false;
   }
 
-  console.log('value para fecha',value);
+  // console.log('value para fecha',value);
   const fecha = moment(value);
   
 
