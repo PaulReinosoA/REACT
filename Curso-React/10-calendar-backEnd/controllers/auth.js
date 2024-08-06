@@ -4,6 +4,7 @@ const { response } = require('express');
 const bcrypt = require('bcryptjs');
 const Usuario = require('../models/Usuario');
 const { generarJWT } = require('../helpers/jwt');
+const jwt = require('jsonwebtoken');
 
 // req-> nos solicitan; res-> nosotros respondemos
 const crearUsuario = async (req, res = response) => {
@@ -90,14 +91,27 @@ const loginUsuario = async (req, res = responsees) => {
 };
 
 const revalidarToken = async (req, res = response) => {
-  const { uid, name } = req;
+  const tokenEncrypt = req.header('x-token');
+  
+  if (!token) {
+    return res.status(401).json({
+      ok: false,
+      msg: 'No se pudo obtener el token en la peticion',
+    });
+  }
+
+  const payload = jwt.decode(tokenEncrypt, process.env.SECRET_JWT_SEED);
+  const { uid, name } = payload;
+
   // generar nuevo jwt y retornarlo en la peticion
   const token = await generarJWT(uid, name);
 
   res.status(200).json({
     ok: true,
     token,
-    msg: 'token renew',
+    uid,
+    name,
+    msg: 'token renew 1',
   });
 };
 
