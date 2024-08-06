@@ -39,19 +39,20 @@ export const LoginPage = () => {
 
   const registerSubmit = (event) => {
     event.preventDefault();
-    if (registerPassword === registerPassword2) {
-      startRegister({
-        name: registerName,
-        email: registerEmail,
-        password: registerPassword,
-      });
-    } else {
+
+    if (registerPassword !== registerPassword2) {
       Swal.fire(
-        'Las contraseñas no coinciden',
+        'Error en la autenticacion',
         'Las contraseñas deben coincidir',
         'error'
       );
+      return;
     }
+    startRegister({
+      name: registerName,
+      email: registerEmail,
+      password: registerPassword,
+    });
   };
 
   useEffect(() => {
