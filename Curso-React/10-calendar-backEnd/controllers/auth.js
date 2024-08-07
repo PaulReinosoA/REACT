@@ -93,7 +93,7 @@ const loginUsuario = async (req, res = responsees) => {
 const revalidarToken = async (req, res = response) => {
   const tokenEncrypt = req.header('x-token');
   
-  if (!token) {
+  if (!tokenEncrypt) {
     return res.status(401).json({
       ok: false,
       msg: 'No se pudo obtener el token en la peticion',

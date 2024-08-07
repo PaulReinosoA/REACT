@@ -21,7 +21,7 @@ export const useAuthStore = () => {
       localStorage.setItem('token-init-date', new Date());
       dispatch(onLogin({ name: data.name, uid: data.uid }));
     } catch (error) {
-      console.log({error})
+      console.log({ error });
       dispatch(onLogOut('error al inciar secion'));
       setTimeout(() => {
         dispatch(clearErrorMessage());
@@ -41,7 +41,7 @@ export const useAuthStore = () => {
       localStorage.setItem('token-init-date', new Date());
       dispatch(onLogin({ name: data.name, uid: data.uid }));
     } catch (error) {
-      console.log({error})
+      console.log({ error });
       dispatch(onLogOut(error.response.data?.msg || ''));
       setTimeout(() => {
         dispatch(clearErrorMessage());
@@ -49,24 +49,24 @@ export const useAuthStore = () => {
     }
   };
 
-  const startRegister = async ({ name, email, password }) => {
-    dispatch(onChecking());
+  const checkAuthToken = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) return dispatch(onLogOut());
+
     try {
-      const { data } = await calendarApi.post('/auth/new', {
-        name,
-        email,
-        password,
-      });
+      const { data } = await calendarApi.get('/auth/renew');
       localStorage.setItem('token', data.token);
-      localStorage.setItem('token-init-date', new Date());
+      localStorage.setItem('token-init-date', new Date().getTime());
       dispatch(onLogin({ name: data.name, uid: data.uid }));
     } catch (error) {
-      const { msg } = error.response.data;
-      dispatch(onLogOut(error ? msg : ''));
-      setTimeout(() => {
-        dispatch(clearErrorMessage());
-      }, 10);
+      localStorage.clear();
+      dispatch(onLogOut());
     }
+  };
+
+  const startLogout = () => {
+    localStorage.clear();
+    dispatch(onLogOut());
   };
 
   return {
@@ -74,8 +74,11 @@ export const useAuthStore = () => {
     status,
     user,
     errorMessage,
+
     //* methods
     startLogin,
     startRegister,
+    checkAuthToken,
+    startLogout,
   };
 };
