@@ -92,7 +92,7 @@ const loginUsuario = async (req, res = responsees) => {
 
 const revalidarToken = async (req, res = response) => {
   const tokenEncrypt = req.header('x-token');
-  
+
   if (!tokenEncrypt) {
     return res.status(401).json({
       ok: false,
@@ -108,9 +108,9 @@ const revalidarToken = async (req, res = response) => {
 
   res.status(200).json({
     ok: true,
-    token,
-    uid, 
     name,
+    uid,
+    token,
     msg: 'token renew',
   });
 };

@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-
-import { LoginPage } from '../auth/pages/LoginPage';
-import { CalendarPage } from '../calendar/pages/CalendarPage';
-import { useAuthStore } from '../store/hooks/useAuthStore';
+import { LoginPage } from '../auth/pages';
+import { CalendarPage } from '../calendar/pages/';
+// import { getEnvVariables } from '../calendar/helpers';
+import { useAuthStore } from '../store/hooks';
 
 export const AppRouter = () => {
-  const { status, checkAuthToken } = useAuthStore();
-  // const authStatus = 'not-authenticated'; // 'authenticated'; // 'not-authenticated';
+  const { checkAuthToken, status } = useAuthStore();
+  // const authStatus = 'not-Authenticated';
+  // console.log(getEnvVariables());
 
   useEffect(() => {
     checkAuthToken();

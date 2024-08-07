@@ -6,6 +6,7 @@ import {
   onLogOut,
   onLogin,
 } from '../auth/authSlice';
+import { onLogOutCalendar } from '../calendar/calendarSlice';
 
 export const useAuthStore = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ export const useAuthStore = () => {
       dispatch(onLogin({ name: data.name, uid: data.uid }));
     } catch (error) {
       console.log({ error });
-      dispatch(onLogOut(error.response.data?.msg || ''));
+      dispatch(onLogOut('error al inciar secion'));
       setTimeout(() => {
         dispatch(clearErrorMessage());
       }, 10);
@@ -64,8 +65,9 @@ export const useAuthStore = () => {
     }
   };
 
-  const startLogout = () => {
+  const startLogOut = () => {
     localStorage.clear();
+    dispatch(onLogOutCalendar());
     dispatch(onLogOut());
   };
 
@@ -79,6 +81,6 @@ export const useAuthStore = () => {
     startLogin,
     startRegister,
     checkAuthToken,
-    startLogout,
+    startLogOut,
   };
 };
