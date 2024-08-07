@@ -22,7 +22,7 @@ export const useAuthStore = () => {
       dispatch(onLogin({ name: data.name, uid: data.uid }));
     } catch (error) {
       console.log({ error });
-      dispatch(onLogOut('error al inciar secion'));
+      dispatch(onLogOut(error.response.data?.msg || ''));
       setTimeout(() => {
         dispatch(clearErrorMessage());
       }, 10);
