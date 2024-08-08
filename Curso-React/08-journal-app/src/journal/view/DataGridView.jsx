@@ -1,6 +1,8 @@
 import { DataGrid, GridLogicOperator } from '@mui/x-data-grid';
 import { esES } from '@mui/x-data-grid/locales';
-import { Box, Grid } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
+import { CSVLink } from 'react-csv';
+import { CloudDownloadOutlined } from '@mui/icons-material';
 import { CustomNoRowsOverlay } from '../components/StyleGridOverlay';
 import { getData } from '../helpers/getData';
 
@@ -42,6 +44,21 @@ export const DataGridView = () => {
           minWidth: { ml: 'calc(100% - 100px)' },
         }}
       >
+        <CSVLink data={dataClean}>
+          {' '}
+          <Button
+            component="label"
+            type="button"
+            variant="contained"
+            tabIndex={-1}
+            startIcon={<CloudDownloadOutlined />}
+            sx={{ margin: '1.0%' }}
+            disabled={isLoading}
+          >
+            Export me
+          </Button>{' '}
+        </CSVLink>
+
         <DataGrid
           rows={dataClean}
           columns={columns}
