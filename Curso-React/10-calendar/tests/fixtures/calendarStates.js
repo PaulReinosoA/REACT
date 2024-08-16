@@ -14,3 +14,21 @@ export const events = [
     notes: 'alguna anotacion de Nicole',
   },
 ];
+
+export const initialState = {
+  isLoadingEvents: true,
+  events: [],
+  activeEvent: null,
+};
+
+export const calendarWithEventState = {
+  isLoadingEvents: false,
+  events: [...events],
+  activeEvent: null,
+};
+
+export const calendarWithActiveEventState = {
+  isLoadingEvents: false,
+  events: [...events],
+  activeEvent: { ...events[0] },
+};
