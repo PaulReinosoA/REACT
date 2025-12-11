@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Heart, Trophy, Users, Zap } from 'lucide-react';
+import { HeroStatCard } from './HeroStatCard';
 
 export const HeroesStats = () => {
   return (
@@ -26,7 +27,12 @@ export const HeroesStats = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <HeroStatCard
+          title="Favorites"
+          icon={<Heart className="h-4 w-4 text-muted-foreground" />}
+        />
+
+        {/* <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Favorites</CardTitle>
             <Heart className="h-4 w-4 text-muted-foreground" />
@@ -57,7 +63,7 @@ export const HeroesStats = () => {
             <div className="text-lg font-bold">Batman</div>
             <p className="text-xs text-muted-foreground">Intelligence: 10/10</p>
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
     </>
   );
