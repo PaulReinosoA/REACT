@@ -1,12 +1,13 @@
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import type { JSX } from 'react';
+import type { JSX, PropsWithChildren } from 'react';
 
-interface Props {
+interface Props extends PropsWithChildren {
   title: string;
   icon: JSX.Element; // o un React.ReactNode
+  // children: React.ReactNode; hace lo mismo extends PropsWithChildren
 }
 
-export const HeroStatCard = ({ title, icon }: Props) => {
+export const HeroStatCard = ({ title, icon, children }: Props) => {
   return (
     <div>
       <Card>
@@ -15,10 +16,7 @@ export const HeroStatCard = ({ title, icon }: Props) => {
           {/* <Heart className="h-4 w-4 text-muted-foreground" /> */}
           {icon}
         </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold text-red-600">3</div>
-          <p className="text-xs text-muted-foreground">18.8% of total</p>
-        </CardContent>
+        <CardContent>{children}</CardContent>
       </Card>
     </div>
   );
