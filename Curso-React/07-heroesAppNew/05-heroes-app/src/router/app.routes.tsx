@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, Navigate } from 'react-router';
 import { HomePage } from '../heroes/pages/home/HomePage';
 import { HeroPage } from '@/heroes/pages/hero/HeroPage';
 // import { SearchPage } from '@/heroes/pages/search/SearchPage';
@@ -21,12 +21,16 @@ export const AppRouter = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: 'heros/1',
+        path: 'heros/:idSlug',
         element: <HeroPage />,
       },
       {
         path: 'search',
         element: <SearchPage />,
+      },
+      {
+        path: '*',
+        element: <Navigate to="/" />,
       },
     ],
   },
