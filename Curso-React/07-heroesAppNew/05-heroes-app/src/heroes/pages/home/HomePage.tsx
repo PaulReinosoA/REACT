@@ -6,27 +6,39 @@ import { HeroGrid } from '@/heroes/components/HeroGrid';
 import { useMemo } from 'react';
 import { CustomPagination } from '@/components/custom/CustomPagination';
 import { CustomBreadcrumbs } from '@/components/custom/CustomBreadcrumb';
-import { getHeroesByPageAction } from '@/heroes/actions/get-heroes-by-page.action';
-import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router';
+import { useHeroSummary } from '@/heroes/hooks/UseHeroSummary';
+import { useHeroPagination } from '@/heroes/hooks/useHeroPagination';
 
 export const HomePage = () => {
+  // const { data: summary } = useQuery({
+  //   queryKey: ['summary-information'],
+  //   queryFn: () => getSummaryAction(),
+  //   staleTime: 1000 * 60 * 5, //5 mins
+  // });
+
+  const { data: summary } = useHeroSummary();
+
   // permite el uso de los params del url obtenerlos o setearlos
-  const [searchParams, setSearchParams] = useSearchParams('all');
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const activeTab = searchParams.get('tab') ?? 'all';
   const activePage = searchParams.get('page') ?? '1';
+  const activelimit = searchParams.get('limit') ?? '6';
+  const activeCategory = searchParams.get('category') ?? 'all';
 
   const selectedTab = useMemo(() => {
     const validTabs = ['all', 'favorites', 'heroes', 'villains'];
     return validTabs.includes(activeTab) ? activeTab : 'all';
   }, [activeTab]);
 
-  const { data } = useQuery({
-    queryKey: ['heroes'],
-    queryFn: () => getHeroesByPageAction(+activePage),
-    staleTime: 1000 * 60 * 5, //5 minutos
-  });
+  // const { data } = useQuery({
+  //   queryKey: ['heroes', { page: activePage, limit: activelimit }],
+  //   queryFn: () => getHeroesByPageAction(+activePage, +activelimit),
+  //   staleTime: 1000 * 60 * 5, //5 minutos
+  // });
+
+  const { data } = useHeroPagination(activePage, activelimit, activeCategory);
 
   const heroesResponse =
     data === undefined ? { total: 0, pages: 0, heroes: [] } : data; // <- lectura segura
@@ -62,11 +74,13 @@ export const HomePage = () => {
               onClick={() =>
                 setSearchParams((prev) => {
                   prev.set('tab', 'all');
+                  prev.set('category', 'all');
+                  prev.set('page', '1');
                   return prev;
                 })
               }
             >
-              All Characters (16)
+              All Characters ({summary?.totalHeroes})
             </TabsTrigger>
             <TabsTrigger
               value="favorites"
@@ -85,22 +99,26 @@ export const HomePage = () => {
               onClick={() =>
                 setSearchParams((prev) => {
                   prev.set('tab', 'heroes');
+                  prev.set('category', 'hero');
+                  prev.set('page', '1');
                   return prev;
                 })
               }
             >
-              Heroes (12)
+              Heroes ({summary?.heroCount})
             </TabsTrigger>
             <TabsTrigger
               value="villains"
               onClick={() =>
                 setSearchParams((prev) => {
                   prev.set('tab', 'villains');
+                  prev.set('category', 'villain');
+                  prev.set('page', '1');
                   return prev;
                 })
               }
             >
-              Villains (2)
+              Villains ({summary?.villainCount})
             </TabsTrigger>
           </TabsList>
 
@@ -117,12 +135,12 @@ export const HomePage = () => {
           <TabsContent value="heroes">
             {/*Mostrar todos los heroes*/}
             <h1>heroes</h1>
-            <HeroGrid heroesResponse={{ total: 0, pages: 0, heroes: [] }} />
+            <HeroGrid heroesResponse={heroesResponse} />
           </TabsContent>
           <TabsContent value="villains">
             {/*Mostrar todos los villains*/}
             <h1>villains</h1>
-            <HeroGrid heroesResponse={{ total: 0, pages: 0, heroes: [] }} />
+            <HeroGrid heroesResponse={heroesResponse} />
           </TabsContent>
         </Tabs>
 
@@ -130,7 +148,7 @@ export const HomePage = () => {
         {/* <HeroGrid /> */}
 
         {/* Pagination */}
-        <CustomPagination totalPages={7} />
+        <CustomPagination totalPages={heroesResponse?.pages ?? 1} />
       </>
     </>
   );

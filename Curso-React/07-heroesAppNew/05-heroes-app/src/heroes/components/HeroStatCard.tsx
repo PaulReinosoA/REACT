@@ -21,3 +21,4 @@ export const HeroStatCard = ({ title, icon, children }: Props) => {
     </div>
   );
 };
+ 
