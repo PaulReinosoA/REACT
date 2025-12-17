@@ -15,7 +15,7 @@ export const CustomMenu = () => {
 
   return (
     <div>
-      <NavigationMenu>
+      <NavigationMenu className='py-5'>
         <NavigationMenuList>
           {/*Home*/}
           <NavigationMenuItem>

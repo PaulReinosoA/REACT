@@ -4,36 +4,36 @@ import { CustomBreadcrumbs } from '@/components/custom/CustomBreadcrumb';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@radix-ui/react-tabs';
 import { Star, Gauge, Zap, Users, Award, Brain, Shield } from 'lucide-react';
-import { useParams } from 'react-router';
+import { Navigate, useParams } from 'react-router';
 import { getHeroBySlugAction } from '@/heroes/actions/get-hero-by-slug.action';
 import { useQuery } from '@tanstack/react-query';
 import type { Hero } from '@/heroes/types/heroes.interfaces';
 
-const superheroData = {
-  id: '1',
-  name: 'Clark Kent',
-  alias: 'Superman',
-  powers: [
-    'Súper fuerza',
-    'Vuelo',
-    'Visión de calor',
-    'Visión de rayos X',
-    'Invulnerabilidad',
-    'Súper velocidad',
-  ],
-  description:
-    'El Último Hijo de Krypton, protector de la Tierra y símbolo de esperanza para toda la humanidad.',
-  strength: 10,
-  intelligence: 8,
-  speed: 9,
-  durability: 10,
-  team: 'Liga de la Justicia',
-  image: '/placeholder.svg?height=300&width=300',
-  firstAppearance: '1938',
-  status: 'Activo',
-  category: 'Héroe',
-  universe: 'DC',
-};
+// const superheroData = {
+//   id: '1',
+//   name: 'Clark Kent',
+//   alias: 'Superman',
+//   powers: [
+//     'Súper fuerza',
+//     'Vuelo',
+//     'Visión de calor',
+//     'Visión de rayos X',
+//     'Invulnerabilidad',
+//     'Súper velocidad',
+//   ],
+//   description:
+//     'El Último Hijo de Krypton, protector de la Tierra y símbolo de esperanza para toda la humanidad.',
+//   strength: 10,
+//   intelligence: 8,
+//   speed: 9,
+//   durability: 10,
+//   team: 'Liga de la Justicia',
+//   image: '/placeholder.svg?height=300&width=300',
+//   firstAppearance: '1938',
+//   status: 'Activo',
+//   category: 'Héroe',
+//   universe: 'DC',
+// };
 
 const averagePower = (hero: Hero) => {
   const totalPower =
@@ -73,31 +73,44 @@ const getCategoryColor = (category: string) => {
 
 export const HeroPage = () => {
   const { idSlug = '' } = useParams();
-  let { data: superHv } = useQuery({
+
+  console.log({ idSlug });
+
+  const { data: superH, isError } = useQuery({
     queryKey: ['hero-information'],
     queryFn: () => getHeroBySlugAction(idSlug),
-    staleTime: 1000 * 60 * 5, //5 mins
+    staleTime: 1000, //o puede no ir para no prevalecer la informacion en cache
+    retry: false,
   });
 
-  if (!superHv)
-    superHv = {
-      id: '',
-      name: '',
-      slug: '',
-      alias: '',
-      powers: [],
-      description: '',
-      strength: 0,
-      intelligence: 0,
-      speed: 0,
-      durability: 0,
-      team: '',
-      image: '',
-      firstAppearance: '',
-      status: '',
-      category: '',
-      universe: '',
-    };
+  const superHvTmp = {
+    id: '',
+    name: '',
+    slug: '',
+    alias: '',
+    powers: [],
+    description: '',
+    strength: 0,
+    intelligence: 0,
+    speed: 0,
+    durability: 0,
+    team: '',
+    image: '',
+    firstAppearance: '',
+    status: '',
+    category: '',
+    universe: '',
+  };
+
+  const superHv = superH === undefined ? superHvTmp : superH;
+
+  if (isError) {
+    return <Navigate to="/" />;
+  }
+
+  if (!superH) {
+    return <h3>Loading...</h3>;
+  }
 
   return (
     <>
@@ -130,7 +143,7 @@ export const HeroPage = () => {
                       superHv?.category ?? ''
                     )} text-white`}
                   >
-                    {superheroData.category}
+                    {superHv?.category}
                   </Badge>
                   <Badge
                     className={`${getStatusColor(
@@ -285,6 +298,7 @@ export const HeroPage = () => {
                         <Progress
                           value={superHv.strength * 10}
                           className="h-4"
+                          activeColor="bg-blue-500"
                         />
                       </div>
                       <div className="w-12 text-right font-bold">
@@ -299,6 +313,7 @@ export const HeroPage = () => {
                         <Progress
                           value={superHv.intelligence * 10}
                           className="h-4"
+                          activeColor="bg-blue-500"
                         />
                       </div>
                       <div className="w-12 text-right font-bold">
@@ -308,7 +323,11 @@ export const HeroPage = () => {
                     <div className="flex items-center gap-4">
                       <div className="w-24 text-sm font-medium">Velocidad</div>
                       <div className="flex-1">
-                        <Progress value={superHv.speed * 10} className="h-4" />
+                        <Progress
+                          value={superHv.speed * 10}
+                          className="h-4"
+                          activeColor="bg-blue-500"
+                        />
                       </div>
                       <div className="w-12 text-right font-bold">
                         {superHv.speed}/10
@@ -322,6 +341,7 @@ export const HeroPage = () => {
                         <Progress
                           value={superHv.durability * 10}
                           className="h-4"
+                          activeColor="bg-blue-500"
                         />
                       </div>
                       <div className="w-12 text-right font-bold">
