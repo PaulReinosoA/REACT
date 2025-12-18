@@ -9,32 +9,6 @@ import { getHeroBySlugAction } from '@/heroes/actions/get-hero-by-slug.action';
 import { useQuery } from '@tanstack/react-query';
 import type { Hero } from '@/heroes/types/heroes.interfaces';
 
-// const superheroData = {
-//   id: '1',
-//   name: 'Clark Kent',
-//   alias: 'Superman',
-//   powers: [
-//     'Súper fuerza',
-//     'Vuelo',
-//     'Visión de calor',
-//     'Visión de rayos X',
-//     'Invulnerabilidad',
-//     'Súper velocidad',
-//   ],
-//   description:
-//     'El Último Hijo de Krypton, protector de la Tierra y símbolo de esperanza para toda la humanidad.',
-//   strength: 10,
-//   intelligence: 8,
-//   speed: 9,
-//   durability: 10,
-//   team: 'Liga de la Justicia',
-//   image: '/placeholder.svg?height=300&width=300',
-//   firstAppearance: '1938',
-//   status: 'Activo',
-//   category: 'Héroe',
-//   universe: 'DC',
-// };
-
 const averagePower = (hero: Hero) => {
   const totalPower =
     Number(hero.strength) +
@@ -76,39 +50,39 @@ export const HeroPage = () => {
 
   console.log({ idSlug });
 
-  const { data: superH, isError } = useQuery({
+  const { data: superHv, isError } = useQuery({
     queryKey: ['hero-information'],
     queryFn: () => getHeroBySlugAction(idSlug),
     staleTime: 1000, //o puede no ir para no prevalecer la informacion en cache
     retry: false,
   });
 
-  const superHvTmp = {
-    id: '',
-    name: '',
-    slug: '',
-    alias: '',
-    powers: [],
-    description: '',
-    strength: 0,
-    intelligence: 0,
-    speed: 0,
-    durability: 0,
-    team: '',
-    image: '',
-    firstAppearance: '',
-    status: '',
-    category: '',
-    universe: '',
-  };
+  // const superHvTmp = {
+  //   id: '',
+  //   name: '',
+  //   slug: '',
+  //   alias: '',
+  //   powers: [],
+  //   description: '',
+  //   strength: 0,
+  //   intelligence: 0,
+  //   speed: 0,
+  //   durability: 0,
+  //   team: '',
+  //   image: '',
+  //   firstAppearance: '',
+  //   status: '',
+  //   category: '',
+  //   universe: '',
+  // };
 
-  const superHv = superH === undefined ? superHvTmp : superH;
+  // const superHv = superH === undefined ? superHvTmp : superH;
 
   if (isError) {
     return <Navigate to="/" />;
   }
 
-  if (!superH) {
+  if (!superHv) {
     return <h3>Loading...</h3>;
   }
 

@@ -1,7 +1,9 @@
 import { Badge } from '@/components/ui/badge';
 import { Heart, Users, Zap } from 'lucide-react';
 import { HeroStatCard } from './HeroStatCard';
-import { useHeroSummary } from '../hooks/UseHeroSummary';
+import { useHeroSummary } from '../hooks/useHeroSummary';
+import { useContext } from 'react';
+import { FavoriteHeroContext } from '../context/FavoriteHeroContext';
 
 export const HeroesStats = () => {
   // const { data: summary } = useQuery({
@@ -11,6 +13,7 @@ export const HeroesStats = () => {
   // });
 
   const { data: summary } = useHeroSummary();
+  const { favoriteCount } = useContext(FavoriteHeroContext);
 
   return (
     <>
@@ -35,8 +38,8 @@ export const HeroesStats = () => {
           icon={<Heart className="h-4 w-4 text-muted-foreground" />}
         >
           {/*TODO: por hacer CALCULAR VALOR*/}
-          <div className="text-2xl font-bold text-red-600">3</div>
-          <p className="text-xs text-muted-foreground">18.8% of total</p>
+          <div className="text-2xl font-bold text-red-600">{favoriteCount}</div>
+          <p className="text-xs text-muted-foreground">{(favoriteCount/(summary?.totalHeroes ?? 1)) * 100}% of total</p>
         </HeroStatCard>
 
         <HeroStatCard
