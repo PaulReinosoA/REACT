@@ -1,24 +1,68 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Slider } from '@/components/ui/slider';
 import { Search, Filter, SortAsc, Grid, Plus } from 'lucide-react';
 import { useRef } from 'react';
 import { useSearchParams } from 'react-router';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+} from '@/components/ui/accordion';
+
+import * as React from 'react';
+import { Check, ChevronsUpDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { MainCatalogData } from '@/data/mainCatalog.data';
 
 export const SearchControls = () => {
-  const [searchParams, setSearchParams] = useSearchParams();  
-
+  const [searchParams, setSearchParams] = useSearchParams();
   const inputRef = useRef<HTMLInputElement>(null);
+  const activeAcordion = searchParams.get('active-acordion') ?? '';
+  const selectedStrength = Number(searchParams.get('strength') ?? '0');
+
+  const setQueryParams = (name: string, value: string) => {
+    setSearchParams((prev) => {
+      prev.set(name, value);
+      return prev;
+    });
+  };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      const input = event.currentTarget.value;
-      console.log(event.currentTarget.value);
-      setSearchParams((prev) => {
-        prev.set('name', input);
-        return prev;
-      });
+      const { name, value: input } = event.currentTarget;
+      console.log(event.currentTarget);
+      setQueryParams(name, input);
     }
   };
+
+  const handleComboChange = (currentValue:string) => {
+    //setOpenTeams(currentValue)
+    console.log(currentValue);
+    // setQueryParams(name, input);
+  };
+
+  const { Categories, Universe, Status, Teams } = MainCatalogData;
+
+  const [openTeams, setOpenTeams] = React.useState(false);
+  const [openCategory, setOpenCategory] = React.useState(false);
+  const [openStatus, setOpenStatus] = React.useState(false);
+  const [openUniverse, setOpenUniverse] = React.useState(false);
+
+  const [value, setValue] = React.useState('');
 
   return (
     <>
@@ -27,6 +71,7 @@ export const SearchControls = () => {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
           <Input
+            name="name"
             ref={inputRef}
             placeholder="Search heroes, villains, powers, teams..."
             className="pl-12 h-12 text-lg bg-white"
@@ -37,17 +82,30 @@ export const SearchControls = () => {
 
         {/* Action buttons */}
         <div className="flex gap-2">
-          <Button variant="outline" className="h-12 bg-transparent">
+          <Button
+            variant={
+              activeAcordion === 'advance-filters' ? 'default' : 'outline'
+            }
+            className="h-12"
+            onClick={() => {
+              if (activeAcordion === 'advance-filters') {
+                setQueryParams('active-acordion', '');
+                //searchParams.delete('active-acordion'); //elimina de mis paramns
+                return;
+              }
+              setQueryParams('active-acordion', 'advance-filters');
+            }}
+          >
             <Filter className="h-4 w-4 mr-2" />
             Filters
           </Button>
 
-          <Button variant="outline" className="h-12 bg-transparent">
+          <Button variant="outline" className="h-12">
             <SortAsc className="h-4 w-4 mr-2" />
             Sort by Name
           </Button>
 
-          <Button variant="outline" className="h-12 bg-transparent">
+          <Button variant="outline" className="h-12">
             <Grid className="h-4 w-4" />
           </Button>
 
@@ -59,50 +117,262 @@ export const SearchControls = () => {
       </div>
 
       {/* Advanced Filters */}
-      <div className="bg-white rounded-lg p-6 mb-8 shadow-sm border">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold">Advanced Filters</h3>
-          <Button variant="ghost">Clear All</Button>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Team</label>
-            <div className="h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
-              All teams
+
+      <Accordion type="single" collapsible value={activeAcordion}>
+        <AccordionItem value="advance-filters">
+          {/* <AccordionTrigger>Advanced filters</AccordionTrigger> */}
+          <AccordionContent>
+            <div className="bg-white rounded-lg p-6 mb-8 shadow-sm border">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold">Advanced Filters</h3>
+                <Button variant="ghost">Clear All</Button>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Team</label>
+                  <div className="h-10 w-full">
+                    <Popover open={openTeams} onOpenChange={setOpenTeams}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={openTeams}
+                          className="w-[200px] justify-between"                          
+                        >
+                          {value
+                            ? Teams.find((team) => team.value === value)?.label
+                            : 'Select team...'}
+                          <ChevronsUpDown className="opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[200px] p-0">
+                        <Command>
+                          <CommandInput
+                            placeholder="Search team..."
+                            className="h-9"
+                          />
+                          <CommandList>
+                            <CommandEmpty>No team found.</CommandEmpty>
+                            <CommandGroup>
+                              {Teams.map((team) => (
+                                <CommandItem
+                                  key={team.value}
+                                  value={team.value}
+                                  onSelect={(currentValue) => {
+                                    setValue(
+                                      currentValue === value ? '' : currentValue
+                                    );
+                                    handleComboChange(currentValue)
+                                    setOpenTeams(false);
+                                  }}
+                                >
+                                  {team.label}
+                                  <Check
+                                    className={cn(
+                                      'ml-auto',
+                                      value === team.value
+                                        ? 'opacity-100'
+                                        : 'opacity-0'
+                                    )}
+                                  />
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    {/* All teams */}
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Category</label>
+                  <div className="h-10 w-full">
+                    <Popover open={openCategory} onOpenChange={setOpenCategory}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={openCategory}
+                          className="w-[200px] justify-between"
+                        >
+                          {value
+                            ? Categories.find((team) => team.value === value)
+                                ?.label
+                            : 'Select category...'}
+                          <ChevronsUpDown className="opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[200px] p-0">
+                        <Command>
+                          <CommandInput
+                            placeholder="Search category..."
+                            className="h-9"
+                          />
+                          <CommandList>
+                            <CommandEmpty>No team found.</CommandEmpty>
+                            <CommandGroup>
+                              {Categories.map((team) => (
+                                <CommandItem
+                                  key={team.value}
+                                  value={team.value}
+                                  onSelect={(currentValue) => {
+                                    setValue(
+                                      currentValue === value ? '' : currentValue
+                                    );
+                                    setOpenTeams(false);
+                                  }}
+                                >
+                                  {team.label}
+                                  <Check
+                                    className={cn(
+                                      'ml-auto',
+                                      value === team.value
+                                        ? 'opacity-100'
+                                        : 'opacity-0'
+                                    )}
+                                  />
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    {/* All categories */}
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Universe</label>
+                  <div className="h-10 w-full">
+                    <Popover open={openUniverse} onOpenChange={setOpenUniverse}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={openUniverse}
+                          className="w-[200px] justify-between"
+                        >
+                          {value
+                            ? Universe.find((team) => team.value === value)
+                                ?.label
+                            : 'Select universe...'}
+                          <ChevronsUpDown className="opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[200px] p-0">
+                        <Command>
+                          <CommandInput
+                            placeholder="Search universe..."
+                            className="h-9"
+                          />
+                          <CommandList>
+                            <CommandEmpty>No team found.</CommandEmpty>
+                            <CommandGroup>
+                              {Universe.map((team) => (
+                                <CommandItem
+                                  key={team.value}
+                                  value={team.value}
+                                  onSelect={(currentValue) => {
+                                    setValue(
+                                      currentValue === value ? '' : currentValue
+                                    );
+                                    setOpenTeams(false);
+                                  }}
+                                >
+                                  {team.label}
+                                  <Check
+                                    className={cn(
+                                      'ml-auto',
+                                      value === team.value
+                                        ? 'opacity-100'
+                                        : 'opacity-0'
+                                    )}
+                                  />
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    {/* All universes */}
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Status</label>
+                  <div className="h-10 w-full">
+                    <Popover open={openStatus} onOpenChange={setOpenStatus}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={openStatus}
+                          className="w-[200px] justify-between"
+                        >
+                          {value
+                            ? Status.find((team) => team.value === value)?.label
+                            : 'Select status...'}
+                          <ChevronsUpDown className="opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[200px] p-0">
+                        <Command>
+                          <CommandInput
+                            placeholder="Search status..."
+                            className="h-9"
+                          />
+                          <CommandList>
+                            <CommandEmpty>No team found.</CommandEmpty>
+                            <CommandGroup>
+                              {Status.map((team) => (
+                                <CommandItem
+                                  key={team.value}
+                                  value={team.value}
+                                  onSelect={(currentValue) => {
+                                    setValue(
+                                      currentValue === value ? '' : currentValue
+                                    );
+                                    setOpenTeams(false);
+                                  }}
+                                >
+                                  {team.label}
+                                  <Check
+                                    className={cn(
+                                      'ml-auto',
+                                      value === team.value
+                                        ? 'opacity-100'
+                                        : 'opacity-0'
+                                    )}
+                                  />
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    {/* All statuses */}
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4">
+                <label className="text-sm font-medium">
+                  Minimum Strength: {selectedStrength}/10
+                </label>
+                <Slider
+                  defaultValue={[selectedStrength]}
+                  max={10}
+                  step={1}
+                  onValueChange={(value) =>
+                    setQueryParams('strength', value[0].toString())
+                  }
+                />
+              </div>
             </div>
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Category</label>
-            <div className="h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
-              All categories
-            </div>
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Universe</label>
-            <div className="h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
-              All universes
-            </div>
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Status</label>
-            <div className="h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
-              All statuses
-            </div>
-          </div>
-        </div>
-        <div className="mt-4">
-          <label className="text-sm font-medium">Minimum Strength: 0/10</label>
-          <div className="relative flex w-full touch-none select-none items-center mt-2">
-            <div className="relative h-2 w-full grow overflow-hidden rounded-full bg-secondary">
-              <div
-                className="absolute h-full bg-primary"
-                style={{ width: '0%' }}
-              />
-            </div>
-            <div className="block h-5 w-5 rounded-full border-2 border-primary bg-background ring-offset-background transition-colors" />
-          </div>
-        </div>
-      </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </>
   );
 };

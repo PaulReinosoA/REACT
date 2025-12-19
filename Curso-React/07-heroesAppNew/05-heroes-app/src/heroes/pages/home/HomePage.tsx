@@ -1,7 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CustomJumbotron } from '@/components/custom/CustomJumbotron';
 import { HeroesStats } from '@/heroes/components/HeroesStats';
-import { SearchControls } from '../search/ui/SearchControls';
 import { HeroGrid } from '@/heroes/components/HeroGrid';
 import { useContext, useMemo } from 'react';
 import { CustomPagination } from '@/components/custom/CustomPagination';
@@ -66,8 +65,8 @@ export const HomePage = () => {
         {/* Stats Dashboard */}
         <HeroesStats />
 
-        {/* Controls */}
-        <SearchControls />
+        {/* Controls
+        <SearchControls /> */}
 
         {/* Tabs */}
         <Tabs value={selectedTab} className="mb-8">
@@ -127,24 +126,24 @@ export const HomePage = () => {
 
           <TabsContent value="all">
             {/*Mostrar todos los personajes*/}
-            <h1>all</h1>
+            {/* <h1>all</h1> */}
             <HeroGrid heroesResponse={heroesResponse} />
           </TabsContent>
           <TabsContent value="favorites">
             {/*Mostrar todos los favorites*/}
-            <h1>favorites</h1>
+            {/* <h1>favorites</h1> */}
             <HeroGrid
               heroesResponse={{ total: 0, pages: 0, heroes: favorite }}
             />
           </TabsContent>
           <TabsContent value="heroes">
             {/*Mostrar todos los heroes*/}
-            <h1>heroes</h1>
+            {/* <h1>heroes</h1> */}
             <HeroGrid heroesResponse={heroesResponse} />
           </TabsContent>
           <TabsContent value="villains">
             {/*Mostrar todos los villains*/}
-            <h1>villains</h1>
+            {/* <h1>villains</h1> */}
             <HeroGrid heroesResponse={heroesResponse} />
           </TabsContent>
         </Tabs>
