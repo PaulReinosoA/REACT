@@ -57,25 +57,6 @@ export const HeroPage = () => {
     retry: false,
   });
 
-  // const superHvTmp = {
-  //   id: '',
-  //   name: '',
-  //   slug: '',
-  //   alias: '',
-  //   powers: [],
-  //   description: '',
-  //   strength: 0,
-  //   intelligence: 0,
-  //   speed: 0,
-  //   durability: 0,
-  //   team: '',
-  //   image: '',
-  //   firstAppearance: '',
-  //   status: '',
-  //   category: '',
-  //   universe: '',
-  // };
-
   // const superHv = superH === undefined ? superHvTmp : superH;
 
   if (isError) {

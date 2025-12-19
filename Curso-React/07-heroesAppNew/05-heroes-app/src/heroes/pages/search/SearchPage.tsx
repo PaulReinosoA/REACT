@@ -7,16 +7,35 @@ import { useQuery } from '@tanstack/react-query';
 import { searchHeroAction } from '@/heroes/actions/search-hero.action';
 import { useSearchParams } from 'react-router';
 
+const superHvTmp = {
+  id: '',
+  name: '',
+  slug: '',
+  alias: '',
+  powers: [],
+  description: '',
+  strength: 0,
+  intelligence: 0,
+  speed: 0,
+  durability: 0,
+  team: '',
+  image: '',
+  firstAppearance: '',
+  status: '',
+  category: '',
+  universe: '',
+};
+
 export const SearchPage = () => {
   //todo use query name with url
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const name = searchParams.get('name') ?? '';
 
-  const { data: superHv } = useQuery({
-    queryKey: ['hero-search-info'],
+  const { data: superHv = [superHvTmp] } = useQuery({
+    queryKey: ['search', { name }],
     queryFn: () => searchHeroAction({ name }),
-    staleTime: 1000, //o puede no ir para no prevalecer la informacion en cache
+    staleTime: 1000 * 60 * 5, //o puede no ir para no prevalecer la informacion en cache
     retry: false,
   });
 
@@ -43,7 +62,13 @@ export const SearchPage = () => {
       <SearchControls />
 
       {superHv && (
-        <HeroGrid heroesResponse={{ total: 0, pages: 0, heroes: [superHv] }} />
+        <HeroGrid
+          heroesResponse={{
+            total: 0,
+            pages: 0,
+            heroes: superHv,
+          }}
+        />
       )}
     </>
   );
