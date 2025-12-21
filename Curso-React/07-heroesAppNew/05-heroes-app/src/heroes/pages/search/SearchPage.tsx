@@ -32,10 +32,11 @@ export const SearchPage = () => {
 
   const name = searchParams.get('name') ?? '';
   const strength = Number(searchParams.get('strength') ?? '0');
+  const team = searchParams.get('team') ?? '';
 
   const { data: superHv = [superHvTmp] } = useQuery({
-    queryKey: ['search', { name,strength }],
-    queryFn: () => searchHeroAction({ name, strength }),
+    queryKey: ['search', { name, strength, team }],
+    queryFn: () => searchHeroAction({ name, strength, team }),
     staleTime: 1000 * 60 * 5, //o puede no ir para no prevalecer la informacion en cache
     retry: false,
   });

@@ -29,10 +29,22 @@ import {
 import { MainCatalogData } from '@/data/mainCatalog.data';
 
 export const SearchControls = () => {
+  const { Categories, Universe, Status, Teams } = MainCatalogData;
+
   const [searchParams, setSearchParams] = useSearchParams();
   const inputRef = useRef<HTMLInputElement>(null);
   const activeAcordion = searchParams.get('active-acordion') ?? '';
   const selectedStrength = Number(searchParams.get('strength') ?? '0');
+
+  const teamsValue = searchParams.get('team') ?? '';
+  const categoryValue = searchParams.get('category') ?? '';
+  const universeValue = searchParams.get('universe') ?? '';
+  const statusValue = searchParams.get('status') ?? '';
+
+  const [openTeams, setOpenTeams] = React.useState(false);
+  const [openCategory, setOpenCategory] = React.useState(false);
+  const [openStatus, setOpenStatus] = React.useState(false);
+  const [openUniverse, setOpenUniverse] = React.useState(false);
 
   const setQueryParams = (name: string, value: string) => {
     setSearchParams((prev) => {
@@ -49,20 +61,21 @@ export const SearchControls = () => {
     }
   };
 
-  const handleComboChange = (currentValue:string) => {
-    //setOpenTeams(currentValue)
-    console.log(currentValue);
-    // setQueryParams(name, input);
+  const handleComboChange = (currentValue: string, name: string) => {
+    setQueryParams(name, currentValue);
   };
 
-  const { Categories, Universe, Status, Teams } = MainCatalogData;
-
-  const [openTeams, setOpenTeams] = React.useState(false);
-  const [openCategory, setOpenCategory] = React.useState(false);
-  const [openStatus, setOpenStatus] = React.useState(false);
-  const [openUniverse, setOpenUniverse] = React.useState(false);
-
-  const [value, setValue] = React.useState('');
+  const clearAllFilters = () => {
+    setSearchParams((prev) => {
+      prev.delete('team');
+      prev.delete('category');
+      prev.delete('universe');
+      prev.delete('status');
+      prev.delete('strength');
+      prev.delete('name');
+      return prev;
+    });
+  };
 
   return (
     <>
@@ -100,16 +113,27 @@ export const SearchControls = () => {
             Filters
           </Button>
 
-          <Button variant="outline" className="h-12">
+          <Button
+            variant="outline"
+            disabled
+            className="h-12 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
             <SortAsc className="h-4 w-4 mr-2" />
             Sort by Name
           </Button>
 
-          <Button variant="outline" className="h-12">
+          <Button
+            variant="outline"
+            disabled
+            className="h-12 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
             <Grid className="h-4 w-4" />
           </Button>
 
-          <Button className="h-12">
+          <Button
+            disabled
+            className="h-12 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
             <Plus className="h-4 w-4 mr-2" />
             Add Character
           </Button>
@@ -125,7 +149,9 @@ export const SearchControls = () => {
             <div className="bg-white rounded-lg p-6 mb-8 shadow-sm border">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold">Advanced Filters</h3>
-                <Button variant="ghost">Clear All</Button>
+                <Button variant="ghost" onClick={clearAllFilters}>
+                  Clear All
+                </Button>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="space-y-2">
@@ -137,10 +163,11 @@ export const SearchControls = () => {
                           variant="outline"
                           role="combobox"
                           aria-expanded={openTeams}
-                          className="w-[200px] justify-between"                          
+                          className="w-[200px] justify-between"
                         >
-                          {value
-                            ? Teams.find((team) => team.value === value)?.label
+                          {teamsValue
+                            ? Teams.find((team) => team.value === teamsValue)
+                                ?.label
                             : 'Select team...'}
                           <ChevronsUpDown className="opacity-50" />
                         </Button>
@@ -159,10 +186,7 @@ export const SearchControls = () => {
                                   key={team.value}
                                   value={team.value}
                                   onSelect={(currentValue) => {
-                                    setValue(
-                                      currentValue === value ? '' : currentValue
-                                    );
-                                    handleComboChange(currentValue)
+                                    handleComboChange(currentValue, 'team');
                                     setOpenTeams(false);
                                   }}
                                 >
@@ -170,7 +194,7 @@ export const SearchControls = () => {
                                   <Check
                                     className={cn(
                                       'ml-auto',
-                                      value === team.value
+                                      teamsValue === team.value
                                         ? 'opacity-100'
                                         : 'opacity-0'
                                     )}
@@ -196,9 +220,10 @@ export const SearchControls = () => {
                           aria-expanded={openCategory}
                           className="w-[200px] justify-between"
                         >
-                          {value
-                            ? Categories.find((team) => team.value === value)
-                                ?.label
+                          {categoryValue
+                            ? Categories.find(
+                                (team) => team.value === categoryValue
+                              )?.label
                             : 'Select category...'}
                           <ChevronsUpDown className="opacity-50" />
                         </Button>
@@ -217,17 +242,15 @@ export const SearchControls = () => {
                                   key={team.value}
                                   value={team.value}
                                   onSelect={(currentValue) => {
-                                    setValue(
-                                      currentValue === value ? '' : currentValue
-                                    );
-                                    setOpenTeams(false);
+                                    handleComboChange(currentValue, 'category');
+                                    setOpenCategory(false);
                                   }}
                                 >
                                   {team.label}
                                   <Check
                                     className={cn(
                                       'ml-auto',
-                                      value === team.value
+                                      categoryValue === team.value
                                         ? 'opacity-100'
                                         : 'opacity-0'
                                     )}
@@ -253,9 +276,10 @@ export const SearchControls = () => {
                           aria-expanded={openUniverse}
                           className="w-[200px] justify-between"
                         >
-                          {value
-                            ? Universe.find((team) => team.value === value)
-                                ?.label
+                          {universeValue
+                            ? Universe.find(
+                                (team) => team.value === universeValue
+                              )?.label
                             : 'Select universe...'}
                           <ChevronsUpDown className="opacity-50" />
                         </Button>
@@ -274,17 +298,15 @@ export const SearchControls = () => {
                                   key={team.value}
                                   value={team.value}
                                   onSelect={(currentValue) => {
-                                    setValue(
-                                      currentValue === value ? '' : currentValue
-                                    );
-                                    setOpenTeams(false);
+                                    handleComboChange(currentValue, 'universe');
+                                    setOpenUniverse(false);
                                   }}
                                 >
                                   {team.label}
                                   <Check
                                     className={cn(
                                       'ml-auto',
-                                      value === team.value
+                                      universeValue === team.value
                                         ? 'opacity-100'
                                         : 'opacity-0'
                                     )}
@@ -310,8 +332,9 @@ export const SearchControls = () => {
                           aria-expanded={openStatus}
                           className="w-[200px] justify-between"
                         >
-                          {value
-                            ? Status.find((team) => team.value === value)?.label
+                          {statusValue
+                            ? Status.find((team) => team.value === statusValue)
+                                ?.label
                             : 'Select status...'}
                           <ChevronsUpDown className="opacity-50" />
                         </Button>
@@ -330,17 +353,15 @@ export const SearchControls = () => {
                                   key={team.value}
                                   value={team.value}
                                   onSelect={(currentValue) => {
-                                    setValue(
-                                      currentValue === value ? '' : currentValue
-                                    );
-                                    setOpenTeams(false);
+                                    handleComboChange(currentValue, 'status');
+                                    setOpenStatus(false);
                                   }}
                                 >
                                   {team.label}
                                   <Check
                                     className={cn(
                                       'ml-auto',
-                                      value === team.value
+                                      statusValue === team.value
                                         ? 'opacity-100'
                                         : 'opacity-0'
                                     )}

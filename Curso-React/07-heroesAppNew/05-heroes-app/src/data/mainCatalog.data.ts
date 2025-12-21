@@ -12,26 +12,26 @@ interface CatalogData {
 
 export const MainCatalogData: CatalogData = {
   Teams: [
-    { value: 'liga-de-la-justicia', label: 'Liga de la Justicia' },
-    { value: 'vengadores', label: 'Vengadores' },
-    { value: 'x-men', label: 'X-Men' },
-    { value: 'batfamilia', label: 'Batfamilia' },
-    { value: 'jovenes-titanes', label: 'Jóvenes Titanes' },
-    { value: 'solo', label: 'Solo' },
+    { value: 'Liga de la Justicia', label: 'Liga de la Justicia' },
+    { value: 'Vengadores', label: 'Vengadores' },
+    { value: 'X-Men', label: 'X-Men' },
+    { value: 'Batfamilia', label: 'Batfamilia' },
+    { value: 'Jóvenes Titanes', label: 'Jóvenes Titanes' },
+    { value: 'Solo', label: 'Solo' },
   ],
 
   Categories: [
-    { value: 'hero', label: 'Hero' },
-    { value: 'villain', label: 'Villain' },
+    { value: 'Hero', label: 'Hero' },
+    { value: 'Villain', label: 'Villain' },
   ],
 
   Universe: [
-    { value: 'dc', label: 'DC' },
-    { value: 'marvel', label: 'Marvel' },
+    { value: 'DC', label: 'DC' },
+    { value: 'Marvel', label: 'Marvel' },
   ],
 
   Status: [
-    { value: 'active', label: 'Active' },
-    { value: 'deceased', label: 'Deceased' },
+    { value: 'Active', label: 'Active' },
+    { value: 'Deceased', label: 'Deceased' },
   ],
 };
