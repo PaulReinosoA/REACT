@@ -1,6 +1,10 @@
+import { AdminTitle } from '@/admin/components/AdminTitle';
 
 export const AdminProductsPage = () => {
   return (
-    <div>AdminProductsPage</div>
-  )
-}
+    <>
+      <AdminTitle title="Productos" subtitle="Gestiona tus productos" />
+      
+    </>
+  );
+};
