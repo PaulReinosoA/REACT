@@ -1,8 +1,13 @@
 import { tesloApi } from '@/api/teslo-api';
 import type { ProductsResponse } from '@/interfaces/products.response';
 
-export const getProductsActions = async () => {
-  const { data } = await tesloApi.get<ProductsResponse>('/products');
-  console.log({ data });
-  return data;
+export const getProductsActions = async ():Promise<ProductsResponse> => {
+  const { data } = await tesloApi.get<ProductsResponse>('/products');  
+  const productsWithImagesUrl = data.products.map((product) => ({
+    ...product,
+    images: product.images.map((image) => 
+      `${import.meta.env.VITE_API_URL}/files/product/${image}`
+    ),
+  }));
+  return {  ...data, products: productsWithImagesUrl };
 };
