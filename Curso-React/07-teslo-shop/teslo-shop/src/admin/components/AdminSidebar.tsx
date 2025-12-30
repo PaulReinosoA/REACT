@@ -38,8 +38,11 @@ export const AdminSidebar: React.FC<SidebarProps> = ({
 
   const isActiveRoute = (to: string | undefined) => {
     //todo:ajustar para pantalla del producto
+    if (pathname.includes('/admin/products/') && to === '/admin/products') {
+      return true;
+    }
 
-    if (!to) return false;
+    //if (!to) return false;
     return pathname === to;
   };
 
