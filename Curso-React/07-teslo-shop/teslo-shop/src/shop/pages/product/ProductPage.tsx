@@ -156,7 +156,7 @@ export const ProductPage = () => {
                 </span>
               </div>
 
-              <button className="w-full bg-blue-600 text-white py-4 rounded-xl font-semibold text-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-3 shadow-lg shadow-blue-600/30">
+              <button className="w-full bg-primary text-primary-foreground py-4 rounded-xl font-semibold text-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-3 shadow-lg shadow-primary/30">
                 <ShoppingCart className="w-6 h-6" />
                 Add to Cart
               </button>
