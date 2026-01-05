@@ -16,7 +16,11 @@ export const FilterSidebar = () => {
       : [...currentSize, size];
 
     searchParams.set('page', '1'); // Reset to first page on filter change
-    searchParams.set('sizes', newsizes.join(','));
+    if(newsizes.length !== 0) {
+      searchParams.set('sizes', newsizes.join(','));
+    } else {
+      searchParams.delete('sizes');
+    }
     setSearchParams(searchParams);
   };
 

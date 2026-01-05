@@ -1,3 +1,4 @@
+import { useAuthStore } from '@/auth/store/auth.store';
 import { CustomLogo } from '@/components/custom/CustomLogo';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,6 +9,7 @@ import { Link, useParams, useSearchParams } from 'react-router';
 
 export const CustomHeader = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { user, logout } = useAuthStore();
 
   const inpurRef = useRef<HTMLInputElement>(null);
 
@@ -66,10 +68,10 @@ export const CustomHeader = () => {
               Mujeres
             </Link>
             <Link
-              to="/gender/kids"
+              to="/gender/kid"
               className={cn(
                 `text-sm font-medium transition-colors hover:text-primary`,
-                gender === 'kids' ? 'underline underline-offset-4' : ''
+                gender === 'kid' ? 'underline underline-offset-4' : ''
               )}
             >
               Niños
@@ -95,11 +97,22 @@ export const CustomHeader = () => {
               <Search className="h-5 w-5" />
             </Button>
 
-            <Link to="/auth/login">
-              <Button variant="default" size="sm" className="ml-2">
-                Login
+            {!user ? (
+              <Link to="/auth/login">
+                <Button variant="default" size="sm" className="ml-2">
+                  Login
+                </Button>
+              </Link>
+            ) : (
+              <Button
+                variant="outline"
+                size="sm"
+                className="ml-2"
+                onClick={logout}
+              >
+                Cerrar sesión
               </Button>
-            </Link>
+            )}
 
             <Link to="/admin">
               <Button variant="destructive" size="sm" className="ml-2">
