@@ -9,7 +9,7 @@ import { Link, useParams, useSearchParams } from 'react-router';
 
 export const CustomHeader = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { user, logout } = useAuthStore();
+  const { authStatus, isAdmin, logout } = useAuthStore();
 
   const inpurRef = useRef<HTMLInputElement>(null);
 
@@ -97,7 +97,7 @@ export const CustomHeader = () => {
               <Search className="h-5 w-5" />
             </Button>
 
-            {!user ? (
+            {authStatus === 'not-authenticated' ? (
               <Link to="/auth/login">
                 <Button variant="default" size="sm" className="ml-2">
                   Login
@@ -114,11 +114,13 @@ export const CustomHeader = () => {
               </Button>
             )}
 
-            <Link to="/admin">
-              <Button variant="destructive" size="sm" className="ml-2">
-                Admin
-              </Button>
-            </Link>
+            {isAdmin() && (
+              <Link to="/admin">
+                <Button variant="destructive" size="sm" className="ml-2">
+                  Admin
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </div>
