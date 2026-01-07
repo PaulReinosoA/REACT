@@ -3,14 +3,37 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { CustomLogo } from '@/components/custom/CustomLogo';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import type { FormEvent } from 'react';
+import { useAuthStore } from '@/auth/store/auth.store';
+import { toast } from 'sonner';
 
 export const RegisterPage = () => {
+  const navigate = useNavigate();
+
+  const { register } = useAuthStore();
+
+  const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); //evito que se recargue la pagina
+    const formData = new FormData(event.target as HTMLFormElement);
+
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    const fullName = formData.get('fullName') as string;
+
+    const isValid = await register(email, password, fullName);
+    if (isValid) {
+      navigate('/');
+      return;
+    }
+    toast.warning('Credenciales incorrectas');
+  };
+
   return (
     <div className={'flex flex-col gap-6'}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form className="p-6 md:p-8" onSubmit={handleRegister}>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <CustomLogo />
@@ -25,6 +48,7 @@ export const RegisterPage = () => {
                   type="fullName"
                   placeholder="Nombre Completo"
                   required
+                  name="fullName"
                 />
               </div>
               <div className="grid gap-2">
@@ -34,6 +58,7 @@ export const RegisterPage = () => {
                   type="email"
                   placeholder="email@example.com"
                   required
+                  name="email"
                 />
               </div>
               <div className="grid gap-2">
@@ -51,6 +76,7 @@ export const RegisterPage = () => {
                   type="password"
                   required
                   placeholder="Contraseña"
+                  name="password"
                 />
               </div>
               <Button type="submit" className="w-full">
